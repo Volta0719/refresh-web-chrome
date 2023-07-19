@@ -1,4 +1,3 @@
-# refresh-web
-Refresh web pages regularly
+# Create your own DevTools extension
 
-测试分支
+This is the source code for the tutorial to create a Microsoft Edge extension that extends DevTools: [Create a DevTools extension](https://learn.microsoft.com/microsoft-edge/extensions-chromium/developer-guide/devtools-extension).
