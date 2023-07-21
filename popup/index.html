@@ -65,6 +65,13 @@
             background: #0b9aed;
             color: white;
         }
+
+        .ico-box {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ico-item {}
     </style>
 </head>
 
@@ -72,14 +79,12 @@
     <h1>VoltaRefresh</h1>
     <div class="top-header">
         <p>定义刷新时间(秒)</p>
-        <button id="startTask">启 动</button>
+        <button id="startTask">添 加</button>
     </div>
     <div class="time-box" id="timeBox"></div>
     <!-- <p>或者自定义事件</p> -->
     <hr />
-    <div class="ico-box">
-        <img src="https://static.zhihu.com/heifetz/favicon.ico" title="aaa" />
-    </div>
+    <div class="ico-box" id="icoBox"></div>
     <script src="popup.js"></script>
 </body>
 
