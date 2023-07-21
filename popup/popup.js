@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-21 16:09:08
+ * @LastEditTime: 2023-07-21 16:35:16
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉  <p class="time-item">60</p>
@@ -25,7 +25,7 @@ if (startTaskDom) {
                 {
                     type: 'start',
                     tabId: tabs[0].id,
-                    time: 20
+                    time: currentTime
                 },
                 function (response) {
                     console.log(response?.farewell);
@@ -47,6 +47,7 @@ timeBoxDom.onclick = (e) => {
     console.log('e.target.classList1', e.target)
     if (e.target.classList.contains('time-item')) {
         removeItemActive();
+        currentTime = e.target.getAttribute("data-time");
         e.target.classList.add('volta-active');
     }
 }
