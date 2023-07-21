@@ -12,18 +12,34 @@ const timeBoxDom = document.getElementById("timeBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600']
 let currentTime = 20;
 let finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
-<p class='time-item ${index === 0 ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}</p>
+<p class='time-item ${index === 0 ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}s</p>
 `, '')
 
 timeBoxDom.innerHTML = `${finalTimeItem}
 <p class='time-item-input' contenteditable='true' id="timeInput"></p>
 `;
 finalTimeItem = null;
+document.getElementById('timeInput').oninput = (e) => {
+    e.target.innerHTML = e.target.innerHTML.replace(/[\D]/g, '');
+    if (window.getSelection) {
+        e.target.focus();
+        let range = window.getSelection();
+        range.selectAllChildren(e.target);
+        range.collapseToEnd();
+    }
+    else if (document.selection) {
+        let range = document.selection.createRange();
+        range.moveToElementText(e.target);
+        range.collapse(false);
+        range.select();
+    }
+}
+
 if (startTaskDom) {
     startTaskDom.onclick = () => {
         console.log('我点击了启动按钮！')
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            console.log('tabs',tabs[0])
+            console.log('tabs', tabs[0])
             chrome.tabs.sendMessage(
                 tabs[0].id,
                 {
