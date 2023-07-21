@@ -2,7 +2,7 @@
     "name": "Refresh web pages regularly",
     "version": "0.0.0.1",
     "manifest_version": 3,
-    "description": "An extension to refresh the page periodically to keep the page logged in.",
+    "description": "An extension which is High-performance scheduled refresh of web pages to keep your pages signed in",
     "icons": {
         "16": "icons/icon.svg",
         "32": "icons/icon.svg",
@@ -12,7 +12,7 @@
     "action": {
         "default_popup": "popup/index.html",
         "default_icon": "icons/icon.svg",
-        "default_title": "__MSG_name__"
+        "default_title": "⏳Refresh web pages regularly"
     },
     "content_scripts": [
         {

@@ -1,17 +1,15 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-21 11:40:20
+ * @LastEditTime: 2023-07-21 15:34:26
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
  */
-
-// chrome.tabs.query({ currentWindow: true }, function (tabs) {
-//    console.log('sssss',tabs)
-// });
+console.log('chrome', chrome)
+// chrome.alarms.create({delayInMinutes: 3.0})
 const id = chrome?.runtime?.id || ''
-const vloltaSessionTimeKey = 'voltaTime'
+const vloltaSessionTimeKey = `voltaTime${id}`
 const voltaMeta = document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`)
 const voltaSessionTime = sessionStorage.getItem(vloltaSessionTimeKey)
 
