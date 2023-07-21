@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:45:22
- * @LastEditTime: 2023-07-20 15:02:11
+ * @LastEditTime: 2023-07-21 16:13:32
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\index.html
  * @Description: 🎉🎉🎉
@@ -12,7 +12,8 @@
     <meta charset="utf-8" />
     <style>
         body {
-            width: 400px;
+            width: 300px;
+            padding: 10px;
         }
 
         button {
@@ -23,14 +24,36 @@
             text-align: center;
             font-size: 16px;
         }
+
+        .time-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .time-item {
+            font-size: 14px;
+            width: 25%;
+            text-align: center;
+            border: 1px solid #c8c7c7;
+            cursor: pointer;
+            margin: 5px;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .volta-active {
+            background: #0b9aed;
+            color: white;
+        }
     </style>
 </head>
 
 <body>
-    <h1>配置定时刷新网页</h1>
-    <p>定时刷新你的页面以保持活力🫖</p>
-    <div>
-        每隔<input type="number" id="mins" />分钟刷新网页
+    <h1>VoltaRefresh</h1>
+    <p>选择刷新时间</p>
+    <div class="time-box" id="timeBox">
     </div>
     <button id="startTask">启 动</button>
     <script src="popup.js"></script>
