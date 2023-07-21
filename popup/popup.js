@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-21 09:19:31
+ * @LastEditTime: 2023-07-21 11:31:52
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉
@@ -17,7 +17,7 @@ if (startTaskDom) {
                 {
                     type: 'start',
                     tabId: tabs[0].id,
-                    time:60
+                    time:20
                 },
                 function (response) {
                     console.log(response?.farewell);
