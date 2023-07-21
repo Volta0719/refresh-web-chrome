@@ -9,17 +9,21 @@
 console.log('chrome popup', chrome)
 const startTaskDom = document.getElementById("startTask");
 const timeBoxDom = document.getElementById("timeBox");
-const choosedTimeList = ['30', '60', '180', '300', '600', '900', '1200', '1800', '3600']
+const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600']
 let currentTime = 20;
 let finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
 <p class='time-item ${index === 0 ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}</p>
 `, '')
-timeBoxDom.innerHTML = finalTimeItem;
+
+timeBoxDom.innerHTML = `${finalTimeItem}
+<p class='time-item-input' contenteditable='true' id="timeInput"></p>
+`;
 finalTimeItem = null;
 if (startTaskDom) {
     startTaskDom.onclick = () => {
         console.log('我点击了启动按钮！')
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            console.log('tabs',tabs[0])
             chrome.tabs.sendMessage(
                 tabs[0].id,
                 {

@@ -7,12 +7,11 @@
  * @Description: 🎉🎉🎉
 -->
 <html>
-
 <head>
     <meta charset="utf-8" />
     <style>
         body {
-            width: 300px;
+            width: 400px;
             padding: 10px;
         }
 
@@ -41,6 +40,19 @@
             margin: 5px;
             height: 24px;
             line-height: 24px;
+            border-radius: 5px;
+        }
+
+        .time-item-input {
+            font-size: 14px;
+            width: 25%;
+            text-align: center;
+            border: 1px solid #c8c7c7;
+            /* cursor: pointer; */
+            margin: 5px;
+            height: 24px;
+            line-height: 24px;
+            border-radius: 5px;
         }
 
         .volta-active {
@@ -52,9 +64,9 @@
 
 <body>
     <h1>VoltaRefresh</h1>
-    <p>选择刷新时间</p>
-    <div class="time-box" id="timeBox">
-    </div>
+    <p>定义刷新时间(秒)</p>
+    <div class="time-box" id="timeBox"></div>
+    <!-- <p>或者自定义事件</p> -->
     <button id="startTask">启 动</button>
     <script src="popup.js"></script>
 </body>
