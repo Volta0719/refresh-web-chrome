@@ -41,3 +41,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
     sendResponse({ farewell: "goodbye2123" });
 });
+
+// chrome.runtime.sendMessage(
+//     { greeting: "hello，我是content-script，主动发消息给后台！" },
+//     function (response) {
+//       console.log("收到来自后台的回复：" + response);
+//     }
+//   );
