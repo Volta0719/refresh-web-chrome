@@ -9,6 +9,7 @@
 console.log('chrome popup', chrome)
 const startTaskDom = document.getElementById("startTask");
 const timeBoxDom = document.getElementById("timeBox");
+const icoBoxDom = document.getElementById("icoBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
 const taskList = {};
 let currentTime = 20;//刷新的时间间隔
@@ -20,7 +21,11 @@ timeBoxDom.innerHTML = `${finalTimeItem}
 <p class='time-item-input' contenteditable='true' id="timeInput"></p>
 `;
 finalTimeItem = null;
-
+const addNewIcoDom = (icoData)=>{
+    icoBoxDom.innerHTML = `${icoBoxDom.innerHTML}
+    <img class='ico-item' src='${icoData.icon}' id='${icoData.id}' data-url='${icoData.url}' data-winid='${icoData.winId}' data-count='${icoData.count}' data-time='${icoData.time}' />
+    `
+}
 if (startTaskDom) {
     startTaskDom.onclick = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -29,7 +34,7 @@ if (startTaskDom) {
                 id: tabs[0].id,
                 icon: tabs[0].favIconUrl,
                 url: tabs[0].url,
-                winId: tabs[0].winId,
+                winId: tabs[0].windowId,
                 time: currentTime,
                 count:1,
             }
@@ -41,7 +46,8 @@ if (startTaskDom) {
                     time: currentTime
                 },
                 function (response) {
-                    console.log(response?.farewell);
+                    // console.log(response?.farewell);
+                    addNewIcoDom(taskList[tabs[0].id])
                 }
             );
         });
