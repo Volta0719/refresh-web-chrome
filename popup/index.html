@@ -7,12 +7,18 @@
  * @Description: 🎉🎉🎉
 -->
 <html>
+
 <head>
     <meta charset="utf-8" />
     <style>
         body {
             width: 400px;
             padding: 10px;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
         }
 
         button {
@@ -64,10 +70,16 @@
 
 <body>
     <h1>VoltaRefresh</h1>
-    <p>定义刷新时间(秒)</p>
+    <div class="top-header">
+        <p>定义刷新时间(秒)</p>
+        <button id="startTask">启 动</button>
+    </div>
     <div class="time-box" id="timeBox"></div>
     <!-- <p>或者自定义事件</p> -->
-    <button id="startTask">启 动</button>
+    <hr />
+    <div class="ico-box">
+        <img src="https://static.zhihu.com/heifetz/favicon.ico" title="aaa" />
+    </div>
     <script src="popup.js"></script>
 </body>
 
