@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-20 14:52:09
+ * @LastEditTime: 2023-07-21 09:19:31
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉
@@ -14,7 +14,11 @@ if (startTaskDom) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.tabs.sendMessage(
                 tabs[0].id,
-                { greeting: "hello，我是popup页面，收到请回复！" },
+                {
+                    type: 'start',
+                    tabId: tabs[0].id,
+                    time:60
+                },
                 function (response) {
                     console.log(response?.farewell);
                 }
