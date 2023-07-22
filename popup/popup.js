@@ -12,7 +12,8 @@ const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
 const taskList = {};
-let currentTime = 20;//刷新的时间间隔
+console.log('taskList', taskList)
+let currentTime = choosedTimeList[0];//刷新的时间间隔
 let finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
 <p class='time-item ${index === 0 ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}s</p>
 `, '')
@@ -21,10 +22,25 @@ timeBoxDom.innerHTML = `${finalTimeItem}
 <p class='time-item-input' contenteditable='true' id="timeInput"></p>
 `;
 finalTimeItem = null;
-const addNewIcoDom = (icoData)=>{
+const addNewIcoDom = (icoData) => {
     icoBoxDom.innerHTML = `${icoBoxDom.innerHTML}
-    <img class='ico-item' src='${icoData.icon}' id='${icoData.id}' data-url='${icoData.url}' data-winid='${icoData.winId}' data-count='${icoData.count}' data-time='${icoData.time}' />
+    <img class='ico-item' 
+    src='${icoData.icon}' 
+    id='${icoData.id}' 
+    data-url='${icoData.url}' 
+    data-winid='${icoData.winId}' 
+    data-count='${icoData.count}' 
+    data-time='${icoData.time}' 
+    data-nexttime='${icoData.nextHappenTime}'
+    />
     `
+}
+
+const updateIcoDomInfo = (id, { count, time, nextHappenTime }) => {
+    const voltaIcoDom = document.getElementById(id);
+    voltaIcoDom.setAttribute('data-count', count);
+    voltaIcoDom.setAttribute('data-time', time);
+    voltaIcoDom.setAttribute('data-nexttime', nextHappenTime);
 }
 if (startTaskDom) {
     startTaskDom.onclick = () => {
@@ -36,7 +52,8 @@ if (startTaskDom) {
                 url: tabs[0].url,
                 winId: tabs[0].windowId,
                 time: currentTime,
-                count:1,
+                count: 1,
+                nextHappenTime: ''
             }
             chrome.tabs.sendMessage(
                 tabs[0].id,
@@ -46,7 +63,8 @@ if (startTaskDom) {
                     time: currentTime
                 },
                 function (response) {
-                    // console.log(response?.farewell);
+                    console.log('response popup', response)
+                    taskList[tabs[0].id].nextHappenTime = response?.nextTime;
                     addNewIcoDom(taskList[tabs[0].id])
                 }
             );
@@ -56,16 +74,23 @@ if (startTaskDom) {
     console.log('startTaskDom未找到！！')
 }
 // //界首content的内容
-// chrome.runtime.onMessage.addListener(
-//     (request, sender, sendResponse) => {
-//         console.log('21321321321321', sender)
-//         console.log(sender.tab ?
-//             "from a content script:" + sender.tab.url :
-//             "from the extension");
-//         //   if (request.greeting.indexOf("hello") !== -1){
-//         //     sendResponse({farewell: "goodbye"});
-//         //   }
-//     });
+chrome.runtime.onMessage.addListener(
+    (request, sender, sendResponse) => {
+        const { tab } = sender;
+        if (taskList.hasOwnProperty(tab.id)) {
+            taskList[tab.id].nextHappenTime = request?.nextTime;
+            taskList[tab.id].count = (+taskList[tab.id].count) + 1;
+            updateIcoDomInfo(tab.id, taskList[tab.id]);
+            sendResponse({
+                message: 'ok'
+            })
+        } else {
+            sendResponse({
+                message: `TaskList Has Not Own Property ${tab.id}`
+            })
+        }
+
+    });
 
 const removeItemActive = () => {
     const activeItem = document.getElementsByClassName('volta-active');
