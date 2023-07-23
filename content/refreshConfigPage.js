@@ -67,7 +67,7 @@ if (!!voltaSessionTime && !voltaMeta) {
     chrome.runtime.sendMessage(
         { nextTime: nextVoltaRerfeshTime },
         function (response) {
-            console.log("收到来自后台的回复：" + response.message);
+            console.log("收到来自后台的回复：" + response?.message);
         }
     );
 }
