@@ -68,10 +68,18 @@
 
         .ico-box {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
+            flex-wrap: wrap;
         }
 
-        .ico-item {}
+        .ico-item {
+            margin: 4px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
     </style>
 </head>
 
@@ -82,9 +90,11 @@
         <button id="startTask">添 加</button>
     </div>
     <div class="time-box" id="timeBox"></div>
-    <!-- <p>或者自定义事件</p> -->
+    <!-- <p>或者自定义事件 https://www.w3school.com.cn/ui2019/logo-32-red.png</p> -->
     <hr />
-    <div class="ico-box" id="icoBox"></div>
+    <div class="ico-box" id="icoBox">
+        <!-- <div class="ico-item" style="background: url('https://www.w3school.com.cn/ui2019/logo-32-red.png');"></div> -->
+    </div>
     <script src="popup.js"></script>
 </body>
 

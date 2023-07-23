@@ -45,12 +45,8 @@ const voltaFormatDate = (date, format) => {
 //记录时间
 const recordNextHappenTime = (time) => {
     let timeNow = new Date();
-    console.log('timeNowBefore', timeNow)
-    console.log('time',time)
     let nowSecond = timeNow.getSeconds();
     timeNow.setSeconds(+time + nowSecond);
-    console.log('+time',+time)
-    console.log('timeNowAfter', timeNow)
     return voltaFormatDate(timeNow, 'yyyy-MM-dd HH:mm:ss')
 }
 const createVoltaRefresh = (time = '60', name = 'volta0719') => {

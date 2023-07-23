@@ -13,6 +13,7 @@ const icoBoxDom = document.getElementById("icoBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
 const taskList = {};
 console.log('taskList', taskList)
+// chrome.stroge.session.set({})
 let currentTime = choosedTimeList[0];//刷新的时间间隔
 let finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
 <p class='time-item ${index === 0 ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}s</p>
@@ -24,9 +25,10 @@ timeBoxDom.innerHTML = `${finalTimeItem}
 finalTimeItem = null;
 const addNewIcoDom = (icoData) => {
     icoBoxDom.innerHTML = `${icoBoxDom.innerHTML}
-    <img class='ico-item' 
-    src='${icoData.icon}' 
+    <div class='ico-item' 
+    style="background:url('${icoData.icon}')"
     id='${icoData.id}' 
+    data-icon='${icoData.icon}'
     data-url='${icoData.url}' 
     data-winid='${icoData.winId}' 
     data-count='${icoData.count}' 
