@@ -10,9 +10,11 @@ console.log('chrome popup', chrome)
 const startTaskDom = document.getElementById("startTask");
 const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
+const voltaMaskBox = document.getElementById("maskBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
 const taskList = {};
 console.log('taskList', taskList)
+// chrome.stroge.session.set({})
 let currentTime = choosedTimeList[0];//刷新的时间间隔
 let finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
 <p class='time-item ${index === 0 ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}s</p>
@@ -24,23 +26,25 @@ timeBoxDom.innerHTML = `${finalTimeItem}
 finalTimeItem = null;
 const addNewIcoDom = (icoData) => {
     icoBoxDom.innerHTML = `${icoBoxDom.innerHTML}
-    <img class='ico-item' 
-    src='${icoData.icon}' 
+    <div class='ico-item' 
+    style="background:url('${icoData.icon}')"
     id='${icoData.id}' 
+    title='${icoData.title}'
+    data-icon='${icoData.icon}'
     data-url='${icoData.url}' 
     data-winid='${icoData.winId}' 
     data-count='${icoData.count}' 
     data-time='${icoData.time}' 
-    data-nexttime='${icoData.nextHappenTime}'
+    data-nexttime='${icoData.nexttime}'
+    data-title='${icoData.title}'
     />
     `
 }
-
-const updateIcoDomInfo = (id, { count, time, nextHappenTime }) => {
+const updateIcoDomInfo = (id, taskInfo) => {
     const voltaIcoDom = document.getElementById(id);
-    voltaIcoDom.setAttribute('data-count', count);
-    voltaIcoDom.setAttribute('data-time', time);
-    voltaIcoDom.setAttribute('data-nexttime', nextHappenTime);
+    ['count','time','nexttime'].forEach(ele=>{
+        voltaIcoDom.setAttribute(`data-${ele}`,taskInfo[ele])
+    })
 }
 if (startTaskDom) {
     startTaskDom.onclick = () => {
@@ -51,9 +55,10 @@ if (startTaskDom) {
                 icon: tabs[0].favIconUrl,
                 url: tabs[0].url,
                 winId: tabs[0].windowId,
+                title:tabs[0].title,
                 time: currentTime,
                 count: 1,
-                nextHappenTime: ''
+                nexttime: ''
             }
             chrome.tabs.sendMessage(
                 tabs[0].id,
@@ -64,7 +69,7 @@ if (startTaskDom) {
                 },
                 function (response) {
                     console.log('response popup', response)
-                    taskList[tabs[0].id].nextHappenTime = response?.nextTime;
+                    taskList[tabs[0].id].nexttime = response?.nextTime;
                     addNewIcoDom(taskList[tabs[0].id])
                 }
             );
@@ -78,7 +83,7 @@ chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => {
         const { tab } = sender;
         if (taskList.hasOwnProperty(tab.id)) {
-            taskList[tab.id].nextHappenTime = request?.nextTime;
+            taskList[tab.id].nexttime = request?.nextTime;
             taskList[tab.id].count = (+taskList[tab.id].count) + 1;
             updateIcoDomInfo(tab.id, taskList[tab.id]);
             sendResponse({
@@ -99,12 +104,22 @@ const removeItemActive = () => {
     }
 }
 timeBoxDom.onclick = (e) => {
-    console.log('e.target.classList1', e.target)
+    console.log('e.target.classList1', [e.target])
     if (e.target.classList.contains('time-item')) {
         removeItemActive();
         currentTime = e.target.getAttribute("data-time");
         e.target.classList.add('volta-active');
     }
+}
+
+icoBox.onclick=(e)=>{
+    // voltaMaskBox
+    const taskInfoData = taskList[e.target.id];
+    document.getElementById('iconVolta').src = taskInfoData.icon;
+    ['url','time','count','nexttime','title','id'].forEach(f=>{
+        document.getElementById(`${f}Volta`).innerHTML = taskInfoData[f]
+    })
+    voltaMaskBox.classList.add('mask-box-in');
 }
 //输入框
 document.getElementById('timeInput').oninput = (e) => {
