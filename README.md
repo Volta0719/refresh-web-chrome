@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:43:02
- * @LastEditTime: 2023-07-21 15:08:40
+ * @LastEditTime: 2023-07-24 08:59:46
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\README.md
  * @Description: 🎉🎉🎉
@@ -22,5 +22,19 @@ https://blog.csdn.net/m0_46555380/article/details/127314553
 
 因为这个页面已经加载完了, 它并没有被注入脚本, 你需要刷新页面, 使脚本注入到页面中, 然后才可以发送消息。
 
+# Refused to execute inline event handler because it violates the following Content Security Policy directive: "script-src 'self'". Either the 'unsafe-inline' keyword, a hash ('sha256-...'), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present.
+谷歌插件不允许在html内添加事件，可以在js中通过操作dom元素的方式增添事件。
+
 
 domDiv.getAttribute("data-index")
+
+favIconUrl
+url
+
+# 转场动画
+
+https://www.zhangxinxu.com/wordpress/2019/05/css-transfer-animation/
+
+# 浏览器插件 监听tab页关闭
+
+https://www.bytenote.net/article/175316400598941697
