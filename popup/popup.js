@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-24 16:42:58
+ * @LastEditTime: 2023-07-24 17:11:12
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -47,18 +47,18 @@ const addNewIcoDom = (icoData) => {
     data-time='${cur.time}' 
     data-nexttime='${cur.nexttime}'
     data-title='${cur.title}'
-    />
+    ></div>
     `, '')
     icoBoxDom.innerHTML = `${icoBoxDom.innerHTML}
     ${finalIcoHtml}
     `
 }
-const updateIcoDomInfo = (id, taskInfo) => {
-    const voltaIcoDom = document.getElementById(id);
-    ['count', 'time', 'nexttime'].forEach(ele => {
-        voltaIcoDom.setAttribute(`data-${ele}`, taskInfo[ele])
-    })
-}
+// const updateIcoDomInfo = (id, taskInfo) => {
+//     const voltaIcoDom = document.getElementById(id);
+//     ['count', 'time', 'nexttime'].forEach(ele => {
+//         voltaIcoDom.setAttribute(`data-${ele}`, taskInfo[ele])
+//     })
+// }
 if (startTaskDom) {
     startTaskDom.onclick = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -99,23 +99,23 @@ if (startTaskDom) {
     console.log('startTaskDom未找到！！')
 }
 // //界首content的内容
-chrome.runtime.onMessage.addListener(
-    (request, sender, sendResponse) => {
-        const { tab } = sender;
-        if (taskList.hasOwnProperty(tab.id)) {
-            taskList[tab.id].nexttime = request?.nextTime;
-            taskList[tab.id].count = (+taskList[tab.id].count) + 1;
-            updateIcoDomInfo(tab.id, taskList[tab.id]);
-            sendResponse({
-                message: 'ok'
-            })
-        } else {
-            sendResponse({
-                message: `TaskList Has Not Own Property ${tab.id}`
-            })
-        }
+// chrome.runtime.onMessage.addListener(
+//     (request, sender, sendResponse) => {
+//         const { tab } = sender;
+//         if (taskList.hasOwnProperty(tab.id)) {
+//             taskList[tab.id].nexttime = request?.nextTime;
+//             taskList[tab.id].count = (+taskList[tab.id].count) + 1;
+//             updateIcoDomInfo(tab.id, taskList[tab.id]);
+//             sendResponse({
+//                 message: 'ok'
+//             })
+//         } else {
+//             sendResponse({
+//                 message: `TaskList Has Not Own Property ${tab.id}`
+//             })
+//         }
 
-    });
+//     });
 
 const removeItemActive = () => {
     const activeItem = document.getElementsByClassName('volta-active');

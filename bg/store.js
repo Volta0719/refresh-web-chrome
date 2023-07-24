@@ -14,5 +14,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 message: 'ok'
             })
         }
-    // sendResponse({res: dealwithBigNumber(val1, val2)});
-});
+    } else if (request?.from === 'content') {
+        const { tab } = sender;
+        if (taskInfoList.hasOwnProperty(tab.id)) {
+            taskInfoList[tab.id].nexttime = request?.nextTime;
+            taskInfoList[tab.id].count = (+taskInfoList[tab.id].count) + 1;
+            sendResponse({
+                message: 'ok'
+            })
+        } else {
+            sendResponse({
+                message: `TaskList Has Not Own Property ${tab.id}`
+            })
+        }
+    }
+}
+);
