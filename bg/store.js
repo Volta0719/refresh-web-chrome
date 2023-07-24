@@ -13,6 +13,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 taskInfoList,
                 message: 'ok'
             })
+        } else if (request?.type === 'delete') {
+            if (taskInfoList.hasOwnProperty(request?.id)) {
+                delete taskInfoList[request.id]
+                sendResponse({
+                    message: 'ok'
+                })
+            } else {
+                sendResponse({
+                    message: `taskInfoList has no id(${request?.id})`
+                })
+            }
+
         }
     } else if (request?.from === 'content') {
         const { tab } = sender;

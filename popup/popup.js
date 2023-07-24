@@ -53,12 +53,12 @@ const addNewIcoDom = (icoData) => {
     ${finalIcoHtml}
     `
 }
-// const updateIcoDomInfo = (id, taskInfo) => {
-//     const voltaIcoDom = document.getElementById(id);
-//     ['count', 'time', 'nexttime'].forEach(ele => {
-//         voltaIcoDom.setAttribute(`data-${ele}`, taskInfo[ele])
-//     })
-// }
+const updateIcoDomInfo = (id, taskInfo) => {
+    const voltaIcoDom = document.getElementById(id);
+    ['count', 'time', 'nexttime'].forEach(ele => {
+        voltaIcoDom.setAttribute(`data-${ele}`, taskInfo[ele])
+    })
+}
 if (startTaskDom) {
     startTaskDom.onclick = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -85,9 +85,13 @@ if (startTaskDom) {
                         nexttime: response?.nextTime
                     }
                     chrome.runtime.sendMessage({ from: 'popup', type: 'add', addData }, (response) => {
-                        taskList = response?.taskInfoList;
                         // 执行根据tablist 添加
-                        addNewIcoDom([addData])
+                        if (taskList.hasOwnProperty(tabs[0].id)) {
+                            updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
+                        } else {
+                            addNewIcoDom([addData]);
+                        }
+                        taskList = response?.taskInfoList;
                     })
                     // taskList[tabs[0].id].nexttime = response?.nextTime;
                     // addNewIcoDom([addData])
@@ -124,7 +128,6 @@ const removeItemActive = () => {
     }
 }
 timeBoxDom.onclick = (e) => {
-    console.log('e.target.classList1', [e.target])
     if (e.target.classList.contains('time-item')) {
         removeItemActive();
         currentTime = e.target.getAttribute("data-time");
@@ -153,17 +156,22 @@ document.getElementById('closeTaskDetail').onclick = (e) => {
 //停止任务
 document.getElementById('stopTask').onclick = (e) => {
     const id = document.getElementById('stopTask').getAttribute('data-id');
-    console.log('iddddd', id)
     chrome.tabs.sendMessage(
         +id,
         {
             type: 'stop',
         },
-        function (response) {
-            delete taskList.id;
+        (response) => {
             voltaMaskBox.classList.remove('mask-box-in');
             voltaMaskBox.classList.add('mask-box-out');
-            document.getElementById(id).remove();
+            chrome.runtime.sendMessage({ type: 'delete', from: 'popup', id }, (result) => {
+                if (result.message === 'ok') {
+                    document.getElementById(id).remove();
+                } else {
+                    alert('停止失败！')
+                }
+            });
+
         }
     );
 
