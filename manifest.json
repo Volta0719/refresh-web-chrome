@@ -1,5 +1,5 @@
 {
-    "name": "Refresh web pages regularly",
+    "name": "Refresh Web Page Regularly",
     "version": "0.0.0.1",
     "manifest_version": 3,
     "description": "An extension which is High-performance scheduled refresh of web pages to keep your pages signed in",
@@ -13,6 +13,9 @@
         "default_popup": "popup/index.html",
         "default_icon": "icons/icon.svg",
         "default_title": "⏳Refresh web pages regularly"
+    },
+    "background": {
+        "service_worker": "bg/store.js"
     },
     "content_scripts": [
         {
