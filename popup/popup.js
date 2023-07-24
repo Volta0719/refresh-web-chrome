@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-24 10:46:27
+ * @LastEditTime: 2023-07-24 14:12:53
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -130,7 +130,7 @@ document.getElementById('closeTaskDetail').onclick = (e) => {
     voltaMaskBox.classList.remove('mask-box-in');
     voltaMaskBox.classList.add('mask-box-out');
 }
-
+//停止任务
 document.getElementById('stopTask').onclick = (e) => {
     const id = document.getElementById('stopTask').getAttribute('data-id');
     console.log('iddddd', id)
