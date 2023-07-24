@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:45:22
- * @LastEditTime: 2023-07-24 09:53:11
+ * @LastEditTime: 2023-07-24 10:12:21
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\index.html
  * @Description: 🎉🎉🎉
@@ -106,6 +106,7 @@
             background-color: rgba(137, 128, 133, 0.35);
             /* padding: 20px; */
             overflow-y: auto;
+            overflow-x: hidden;
             /* background-color: ; */
         }
 
@@ -124,6 +125,10 @@
             margin-left: 10px;
             font-size: 14px;
             line-height: 40px;
+            white-space: nowrap;
+            width: 298px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .detail-item {
@@ -186,7 +191,7 @@
                 </div>
                 <div class="volta-flex">
                     <!--stop-->
-                    <div title="停止自动刷新任务" class="btn-icon">
+                    <div title="停止自动刷新任务" class="btn-icon" id="stopTask">
                         <svg t="1690161658896" class="icon" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="1664" width="24" height="24">
                             <path
