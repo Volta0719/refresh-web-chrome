@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:45:22
- * @LastEditTime: 2023-07-24 14:35:36
+ * @LastEditTime: 2023-07-24 16:03:55
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\index.html
  * @Description: 🎉🎉🎉
@@ -28,13 +28,14 @@
             width: 400px;
             padding: 10px;
             position: relative;
+            /* min-height:235px; */
         }
 
         .page-title {
-            height: 30px;
-            line-height: 30px;
+            height: 40px;
+            line-height: 40px;
             font-weight: bolder;
-            font-size: 20px;
+            font-size: 22px;
             text-align: center;
         }
 
@@ -167,7 +168,7 @@
 
         .detail-item {
             border-top: 1px solid rgb(68, 219, 224);
-            padding: 10px;
+            padding: 8px;
             font-size: 14px;
         }
 
@@ -296,7 +297,7 @@
         <div class="top-header volta-flex">
             <p>定义刷新时间(秒)</p>
             <!-- <div class="add-btn">添 加</div> -->
-            <button id="startTask" class="add-btn">添 加</button>
+            <button id="startTask" class="add-btn" title="为当前页面添加定时刷新任务">添 加</button>
 
         </div>
         <div class="time-box volta-flex" id="timeBox"></div>

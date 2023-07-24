@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-24 14:12:53
+ * @LastEditTime: 2023-07-24 16:42:58
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -12,8 +12,17 @@ const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
 const voltaMaskBox = document.getElementById("maskBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
-const taskList = {};
-console.log('taskList', taskList)
+let taskList = {};
+chrome.runtime.sendMessage({ type: 'get', from: 'popup' }, (response) => {
+    taskList = response?.taskInfoList;
+    // 执行根据tablist 添加
+    let addList = Object.values(taskList);
+    if (addList.length > 0) {
+        addNewIcoDom(addList)
+    }
+});
+// var bg = chrome.extension.getBackgroundPage(); v2版本
+// console.log('taskList', bg)
 // chrome.stroge.session.set({})
 let currentTime = choosedTimeList[0];//刷新的时间间隔
 let finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
@@ -25,19 +34,23 @@ timeBoxDom.innerHTML = `${finalTimeItem}
 `;
 finalTimeItem = null;
 const addNewIcoDom = (icoData) => {
-    icoBoxDom.innerHTML = `${icoBoxDom.innerHTML}
+    let finalIcoHtml = icoData.reduce((acc, cur, index, arr) => `
+    ${acc}
     <div class='ico-item' 
-    style="background:url('${icoData.icon}')"
-    id='${icoData.id}' 
-    title='${icoData.title}'
-    data-icon='${icoData.icon}'
-    data-url='${icoData.url}' 
-    data-winid='${icoData.winId}' 
-    data-count='${icoData.count}' 
-    data-time='${icoData.time}' 
-    data-nexttime='${icoData.nexttime}'
-    data-title='${icoData.title}'
+    style="background:url('${cur.icon}')"
+    id='${cur.id}' 
+    title='${cur.title}'
+    data-icon='${cur.icon}'
+    data-url='${cur.url}' 
+    data-winid='${cur.winId}' 
+    data-count='${cur.count}' 
+    data-time='${cur.time}' 
+    data-nexttime='${cur.nexttime}'
+    data-title='${cur.title}'
     />
+    `, '')
+    icoBoxDom.innerHTML = `${icoBoxDom.innerHTML}
+    ${finalIcoHtml}
     `
 }
 const updateIcoDomInfo = (id, taskInfo) => {
@@ -50,16 +63,7 @@ if (startTaskDom) {
     startTaskDom.onclick = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             console.log('tabs', tabs[0])
-            taskList[tabs[0].id] = {
-                id: tabs[0].id,
-                icon: tabs[0].favIconUrl,
-                url: tabs[0].url,
-                winId: tabs[0].windowId,
-                title: tabs[0].title,
-                time: currentTime,
-                count: 1,
-                nexttime: ''
-            }
+            //向conent-script 通信
             chrome.tabs.sendMessage(
                 tabs[0].id,
                 {
@@ -67,10 +71,26 @@ if (startTaskDom) {
                     tabId: tabs[0].id,
                     time: currentTime
                 },
-                function (response) {
+                (response) => {
                     console.log('response popup', response)
-                    taskList[tabs[0].id].nexttime = response?.nextTime;
-                    addNewIcoDom(taskList[tabs[0].id])
+                    //向background 通信 更新 taskList的值
+                    const addData = {
+                        id: tabs[0].id,
+                        icon: tabs[0].favIconUrl,
+                        url: tabs[0].url,
+                        winId: tabs[0].windowId,
+                        title: tabs[0].title,
+                        time: currentTime,
+                        count: 1,
+                        nexttime: response?.nextTime
+                    }
+                    chrome.runtime.sendMessage({ from: 'popup', type: 'add', addData }, (response) => {
+                        taskList = response?.taskInfoList;
+                        // 执行根据tablist 添加
+                        addNewIcoDom([addData])
+                    })
+                    // taskList[tabs[0].id].nexttime = response?.nextTime;
+                    // addNewIcoDom([addData])
                 }
             );
         });
