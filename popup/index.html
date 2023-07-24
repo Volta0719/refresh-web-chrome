@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:45:22
- * @LastEditTime: 2023-07-24 11:28:59
+ * @LastEditTime: 2023-07-24 14:02:02
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\index.html
  * @Description: 🎉🎉🎉
@@ -34,13 +34,38 @@
             justify-content: space-between;
         }
 
-        button {
-            background-color: #336dab;
-            border: none;
+        .add-btn {
+            border: 1px solid white;
+            background: #1a92ee;
+            text-transform: uppercase;
             color: white;
-            padding: 8px 10px;
-            text-align: center;
-            font-size: 16px;
+            padding: 1px 20px;
+            outline: none;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            height:30px;
+            width: 80px;
+
+        }
+
+        .add-btn:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -36px;
+            left: -100px;
+            background: rgb(200, 199, 194);
+            width: 30px;
+            height: 75px;
+            opacity: 20%;
+            transform: rotate(-45deg);
+        }
+
+        .add-btn:hover:after {
+            left: 120%;
+            transition: all .9s cubic-bezier(0.3, 1, 0.2, 1);
+            -webkit-transition: all .9s cubic-bezier(0.3, 1, 0.2, 1);
         }
 
         .time-box {
@@ -147,6 +172,7 @@
             /* display: block; */
             pointer-events: auto;
             opacity: 1;
+            z-index: 5;
             animation: clipCircleIn .4s;
         }
 
@@ -260,7 +286,9 @@
         <h1>VoltaRefresh</h1>
         <div class="top-header volta-flex">
             <p>定义刷新时间(秒)</p>
-            <button id="startTask">添 加</button>
+            <!-- <div class="add-btn">添 加</div> -->
+            <button id="startTask" class="add-btn">添 加</button>
+
         </div>
         <div class="time-box volta-flex" id="timeBox"></div>
         <!-- <p>或者自定义事件 https://www.w3school.com.cn/ui2019/logo-32-red.png</p> -->
