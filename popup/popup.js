@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-21 16:35:16
+ * @LastEditTime: 2023-07-24 14:12:53
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -42,8 +42,8 @@ const addNewIcoDom = (icoData) => {
 }
 const updateIcoDomInfo = (id, taskInfo) => {
     const voltaIcoDom = document.getElementById(id);
-    ['count','time','nexttime'].forEach(ele=>{
-        voltaIcoDom.setAttribute(`data-${ele}`,taskInfo[ele])
+    ['count', 'time', 'nexttime'].forEach(ele => {
+        voltaIcoDom.setAttribute(`data-${ele}`, taskInfo[ele])
     })
 }
 if (startTaskDom) {
@@ -55,7 +55,7 @@ if (startTaskDom) {
                 icon: tabs[0].favIconUrl,
                 url: tabs[0].url,
                 winId: tabs[0].windowId,
-                title:tabs[0].title,
+                title: tabs[0].title,
                 time: currentTime,
                 count: 1,
                 nexttime: ''
@@ -111,15 +111,42 @@ timeBoxDom.onclick = (e) => {
         e.target.classList.add('volta-active');
     }
 }
-
-icoBox.onclick=(e)=>{
-    // voltaMaskBox
+//打开任务详情
+icoBox.onclick = (e) => {
     const taskInfoData = taskList[e.target.id];
     document.getElementById('iconVolta').src = taskInfoData.icon;
-    ['url','time','count','nexttime','title','id'].forEach(f=>{
-        document.getElementById(`${f}Volta`).innerHTML = taskInfoData[f]
+    ['url', 'time', 'count', 'nexttime', 'title', 'id'].forEach(f => {
+        document.getElementById(`${f}Volta`).innerHTML = taskInfoData[f];
+        if (f === 'title') {
+            document.getElementById(`${f}Volta`).title = taskInfoData[f]
+        }
     })
+    document.getElementById('stopTask').setAttribute('data-id', e.target.id)
+    voltaMaskBox.classList.remove('mask-box-out');
     voltaMaskBox.classList.add('mask-box-in');
+}
+
+document.getElementById('closeTaskDetail').onclick = (e) => {
+    voltaMaskBox.classList.remove('mask-box-in');
+    voltaMaskBox.classList.add('mask-box-out');
+}
+//停止任务
+document.getElementById('stopTask').onclick = (e) => {
+    const id = document.getElementById('stopTask').getAttribute('data-id');
+    console.log('iddddd', id)
+    chrome.tabs.sendMessage(
+        +id,
+        {
+            type: 'stop',
+        },
+        function (response) {
+            delete taskList.id;
+            voltaMaskBox.classList.remove('mask-box-in');
+            voltaMaskBox.classList.add('mask-box-out');
+            document.getElementById(id).remove();
+        }
+    );
+
 }
 //输入框
 document.getElementById('timeInput').oninput = (e) => {

@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-21 15:34:26
+ * @LastEditTime: 2023-07-24 11:07:24
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -49,9 +49,10 @@ const recordNextHappenTime = (time) => {
     timeNow.setSeconds(+time + nowSecond);
     return voltaFormatDate(timeNow, 'yyyy-MM-dd HH:mm:ss')
 }
-const createVoltaRefresh = (time = '60', name = 'volta0719') => {
-    if (!!voltaMeta) {
-        voltaMeta.content = time;
+const createVoltaRefresh = (time = '60', name = vloltaSessionTimeKey) => {
+    if (!!document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`)) {
+        console.log(`已存在voltarefresh任务，已调整刷新时间为${time}秒`)
+        document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`).content = time;
     } else {
         const voltaCreateMeta = document.createElement('meta');
         voltaCreateMeta.name = name;
@@ -81,12 +82,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({
             nextTime: nextVoltaRerfeshTime
         })
-    } else if (request?.type === 'update') {
-        //修改
-        sendResponse({ farewell: "goodbye2123" });
     } else if (request?.type === 'stop') {
         //停止
-        sendResponse({ farewell: "goodbye2123" });
+        sessionStorage.removeItem(vloltaSessionTimeKey);
+        document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`).remove();
+        sendResponse({ message: "ok" });
     }
 
 });

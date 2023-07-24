@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:45:22
- * @LastEditTime: 2023-07-21 16:13:32
+ * @LastEditTime: 2023-07-24 14:35:36
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\index.html
  * @Description: 🎉🎉🎉
@@ -30,17 +30,51 @@
             position: relative;
         }
 
-        .top-header {
-            justify-content: space-between;
+        .page-title {
+            height: 30px;
+            line-height: 30px;
+            font-weight: bolder;
+            font-size: 20px;
+            text-align: center;
         }
 
-        button {
-            background-color: #336dab;
-            border: none;
+        .top-header {
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-btn {
+            border: 1px solid white;
+            background: #1a92ee;
+            text-transform: uppercase;
             color: white;
-            padding: 8px 10px;
-            text-align: center;
-            font-size: 16px;
+            padding: 1px 20px;
+            outline: none;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            height: 30px;
+            width: 80px;
+
+        }
+
+        .add-btn:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -36px;
+            left: -100px;
+            background: rgb(200, 199, 194);
+            width: 30px;
+            height: 75px;
+            opacity: 20%;
+            transform: rotate(-45deg);
+        }
+
+        .add-btn:hover:after {
+            left: 120%;
+            transition: all .9s cubic-bezier(0.3, 1, 0.2, 1);
+            -webkit-transition: all .9s cubic-bezier(0.3, 1, 0.2, 1);
         }
 
         .time-box {
@@ -95,7 +129,9 @@
 
         .mask-box {
             position: absolute;
-            display: none;
+            /* display: none; */
+            pointer-events: none;
+            opacity: 0;
             top: 0;
             left: 0;
             width: 100%;
@@ -104,17 +140,29 @@
             background-color: rgba(137, 128, 133, 0.35);
             /* padding: 20px; */
             overflow-y: auto;
+            overflow-x: hidden;
             /* background-color: ; */
+        }
+
+        .btn-icon {
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 3px;
         }
 
         .detail-header {
             padding: 10px;
+            justify-content: space-between;
         }
 
         #titleVolta {
             margin-left: 10px;
             font-size: 14px;
             line-height: 40px;
+            white-space: nowrap;
+            width: 298px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .detail-item {
@@ -130,28 +178,93 @@
         }
 
         .mask-box-in {
-            display: block;
+            /* display: block; */
+            pointer-events: auto;
+            opacity: 1;
+            z-index: 5;
             animation: clipCircleIn .4s;
+        }
+
+        .mask-box-out {
+            animation: clipCircleOut .4s;
         }
 
         @keyframes clipCircleIn {
             0% {
+                opacity: 0;
                 clip-path: inset(80%);
             }
 
             100% {
+                opacity: 1;
                 clip-path: inset(0%);
+            }
+        }
+
+        @keyframes clipCircleOut {
+            0% {
+                opacity: 1;
+                clip-path: inset(0%);
+
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: inset(80%);
             }
         }
     </style>
 </head>
 
 <body>
+    <svg width="46" height="46" title="Volta0719" viewBox="0 0 250 250" aria-hidden="true" target="__blank"
+        style="z-index:2;cursor: pointer;right: 0px; position: fixed; left: initial; transform: scale(1, 1); bottom: initial; top: 0px;">
+        <a href="https://github.com/Volta0719/refresh-web" target="_blank" rel="nofollow sponsored"
+            style="fill: rgb(21, 21, 19); color: rgb(255, 255, 255);">
+            <g>
+                <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+                <path
+                    d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                    fill="currentColor" class="octo-arm" style="transform-origin: 130px 106px;"></path>
+                <path
+                    d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                    fill="currentColor" class="octo-body"></path>
+            </g>
+        </a>
+    </svg>
     <div class="volta-popup-box">
         <div class="mask-box" id="maskBox">
             <div class="volta-flex detail-header">
-                <img id="iconVolta" height="40px" width="40px" />
-                <div id="titleVolta"></div>
+                <div class="volta-flex">
+                    <img id="iconVolta" height="40px" width="40px" />
+                    <div id="titleVolta"></div>
+                </div>
+                <div class="volta-flex">
+                    <!--stop-->
+                    <div title="停止自动刷新任务" class="btn-icon" id="stopTask">
+                        <svg t="1690161658896" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="1664" width="24" height="24">
+                            <path
+                                d="M511.04208969 90.96642031c-231.4939275 0-419.1484575 187.64877375-419.1484575 419.14653844 0 231.50064281 187.65453 419.14653844 419.1484575 419.14653844 231.50064281 0 419.14462031-187.64877375 419.14462031-419.14749844C930.18670906 278.615195 742.5417725 90.96642031 511.04208969 90.96642031zM511.04208969 873.37450812c-200.29492031 0-363.26250844-162.96375094-363.26250844-363.26058937 0-200.29396031 162.96758813-363.25867031 363.26250844-363.25867031s363.25771125 162.96566906 363.25771125 363.25867031C874.30076 710.40883906 711.33700906 873.37450812 511.04208969 873.37450812z"
+                                p-id="1665"></path>
+                            <path
+                                d="M329.39596531 328.46875438L329.39596531 691.757165l363.28841063 0L692.68437594 328.46875438 329.39596531 328.46875438zM639.86738562 637.98082531L384.13165438 637.98082531 384.13165438 382.24605313l255.73573125-1e-8L639.86738562 637.98082531z"
+                                fill="#2c2c2c" p-id="1666"></path>
+                        </svg>
+                    </div>
+                    <!--close-->
+                    <div title="关闭任务详情" class="btn-icon" id="closeTaskDetail">
+                        <svg t="1690161834285" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="2114" width="24" height="24">
+                            <path
+                                d="M512 75.09333333C271.70133333 75.09333333 75.09333333 271.70133333 75.09333333 512s196.608 436.90666667 436.90666667 436.90666667 436.90666667-196.608 436.90666667-436.90666667S752.29866667 75.09333333 512 75.09333333zM512 876.08888889c-203.88977778 0-364.08888889-160.19911111-364.08888889-364.08888889s160.19911111-364.08888889 364.08888889-364.08888889 364.08888889 160.19911111 364.08888889 364.08888889S715.88977778 876.08888889 512 876.08888889z"
+                                p-id="2115"></path>
+                            <path
+                                d="M672 352c-12.8-12.8-32-12.8-44.8 0L512 467.2 396.8 352C384 339.2 364.8 339.2 352 352S339.2 384 352 396.8L467.2 512 352 627.2c-12.8 12.8-12.8 32 0 44.8s32 12.8 44.8 0L512 556.8l115.2 115.2c12.8 12.8 32 12.8 44.8 0s12.8-32 0-44.8L556.8 512l115.2-115.2C684.8 384 684.8 364.8 672 352z"
+                                p-id="2116"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <div class="volta-flex">
@@ -179,10 +292,12 @@
                 <div id="urlVolta"></div>
             </div>
         </div>
-        <h1>VoltaRefresh</h1>
+        <div class="page-title">Refresh Web Page Regularly</div>
         <div class="top-header volta-flex">
             <p>定义刷新时间(秒)</p>
-            <button id="startTask">添 加</button>
+            <!-- <div class="add-btn">添 加</div> -->
+            <button id="startTask" class="add-btn">添 加</button>
+
         </div>
         <div class="time-box volta-flex" id="timeBox"></div>
         <!-- <p>或者自定义事件 https://www.w3school.com.cn/ui2019/logo-32-red.png</p> -->
