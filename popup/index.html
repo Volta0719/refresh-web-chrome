@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:45:22
- * @LastEditTime: 2023-07-21 16:13:32
+ * @LastEditTime: 2023-07-24 09:53:11
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\index.html
  * @Description: 🎉🎉🎉
@@ -95,7 +95,9 @@
 
         .mask-box {
             position: absolute;
-            display: none;
+            /* display: none; */
+            pointer-events: none;
+            opacity: 0;
             top: 0;
             left: 0;
             width: 100%;
@@ -107,8 +109,15 @@
             /* background-color: ; */
         }
 
+        .btn-icon {
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 3px;
+        }
+
         .detail-header {
             padding: 10px;
+            justify-content: space-between;
         }
 
         #titleVolta {
@@ -130,17 +139,38 @@
         }
 
         .mask-box-in {
-            display: block;
+            /* display: block; */
+            pointer-events: auto;
+            opacity: 1;
             animation: clipCircleIn .4s;
+        }
+
+        .mask-box-out {
+            animation: clipCircleOut .4s;
         }
 
         @keyframes clipCircleIn {
             0% {
+                opacity: 0;
                 clip-path: inset(80%);
             }
 
             100% {
+                opacity: 1;
                 clip-path: inset(0%);
+            }
+        }
+
+        @keyframes clipCircleOut {
+            0% {
+                opacity: 1;
+                clip-path: inset(0%);
+
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: inset(80%);
             }
         }
     </style>
@@ -150,8 +180,36 @@
     <div class="volta-popup-box">
         <div class="mask-box" id="maskBox">
             <div class="volta-flex detail-header">
-                <img id="iconVolta" height="40px" width="40px" />
-                <div id="titleVolta"></div>
+                <div class="volta-flex">
+                    <img id="iconVolta" height="40px" width="40px" />
+                    <div id="titleVolta"></div>
+                </div>
+                <div class="volta-flex">
+                    <!--stop-->
+                    <div title="停止自动刷新任务" class="btn-icon">
+                        <svg t="1690161658896" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="1664" width="24" height="24">
+                            <path
+                                d="M511.04208969 90.96642031c-231.4939275 0-419.1484575 187.64877375-419.1484575 419.14653844 0 231.50064281 187.65453 419.14653844 419.1484575 419.14653844 231.50064281 0 419.14462031-187.64877375 419.14462031-419.14749844C930.18670906 278.615195 742.5417725 90.96642031 511.04208969 90.96642031zM511.04208969 873.37450812c-200.29492031 0-363.26250844-162.96375094-363.26250844-363.26058937 0-200.29396031 162.96758813-363.25867031 363.26250844-363.25867031s363.25771125 162.96566906 363.25771125 363.25867031C874.30076 710.40883906 711.33700906 873.37450812 511.04208969 873.37450812z"
+                                p-id="1665"></path>
+                            <path
+                                d="M329.39596531 328.46875438L329.39596531 691.757165l363.28841063 0L692.68437594 328.46875438 329.39596531 328.46875438zM639.86738562 637.98082531L384.13165438 637.98082531 384.13165438 382.24605313l255.73573125-1e-8L639.86738562 637.98082531z"
+                                fill="#2c2c2c" p-id="1666"></path>
+                        </svg>
+                    </div>
+                    <!--close-->
+                    <div title="关闭任务详情" class="btn-icon" id="closeTaskDetail">
+                        <svg t="1690161834285" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="2114" width="24" height="24">
+                            <path
+                                d="M512 75.09333333C271.70133333 75.09333333 75.09333333 271.70133333 75.09333333 512s196.608 436.90666667 436.90666667 436.90666667 436.90666667-196.608 436.90666667-436.90666667S752.29866667 75.09333333 512 75.09333333zM512 876.08888889c-203.88977778 0-364.08888889-160.19911111-364.08888889-364.08888889s160.19911111-364.08888889 364.08888889-364.08888889 364.08888889 160.19911111 364.08888889 364.08888889S715.88977778 876.08888889 512 876.08888889z"
+                                p-id="2115"></path>
+                            <path
+                                d="M672 352c-12.8-12.8-32-12.8-44.8 0L512 467.2 396.8 352C384 339.2 364.8 339.2 352 352S339.2 384 352 396.8L467.2 512 352 627.2c-12.8 12.8-12.8 32 0 44.8s32 12.8 44.8 0L512 556.8l115.2 115.2c12.8 12.8 32 12.8 44.8 0s12.8-32 0-44.8L556.8 512l115.2-115.2C684.8 384 684.8 364.8 672 352z"
+                                p-id="2116"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
 
             <div class="volta-flex">

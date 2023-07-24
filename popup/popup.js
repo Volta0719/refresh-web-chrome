@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-24 08:58:57
+ * @LastEditTime: 2023-07-24 09:48:29
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -119,7 +119,14 @@ icoBox.onclick=(e)=>{
     ['url','time','count','nexttime','title','id'].forEach(f=>{
         document.getElementById(`${f}Volta`).innerHTML = taskInfoData[f]
     })
+    voltaMaskBox.classList.remove('mask-box-out');
     voltaMaskBox.classList.add('mask-box-in');
+}
+
+document.getElementById('closeTaskDetail').onclick=(e)=>{
+    voltaMaskBox.classList.remove('mask-box-in');
+    voltaMaskBox.classList.add('mask-box-out');
+    
 }
 //输入框
 document.getElementById('timeInput').oninput = (e) => {
