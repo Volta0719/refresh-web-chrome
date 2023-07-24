@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-24 11:07:24
+ * @LastEditTime: 2023-07-24 17:16:37
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -65,8 +65,9 @@ if (!!voltaSessionTime && !voltaMeta) {
     // const voltaStartTime = new Date();//获取时间
     createVoltaRefresh(voltaSessionTime);
     const nextVoltaRerfeshTime = recordNextHappenTime(voltaSessionTime);
+    //这个应该要做修改 要与service_work通信
     chrome.runtime.sendMessage(
-        { nextTime: nextVoltaRerfeshTime },
+        { from: 'content', nextTime: nextVoltaRerfeshTime },
         function (response) {
             console.log("收到来自后台的回复：" + response?.message);
         }

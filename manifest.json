@@ -14,6 +14,9 @@
         "default_icon": "icons/icon.svg",
         "default_title": "⏳Refresh web pages regularly"
     },
+    "background": {
+        "service_worker": "bg/store.js"
+    },
     "content_scripts": [
         {
             "matches": [

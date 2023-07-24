@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:43:02
- * @LastEditTime: 2023-07-24 10:57:02
+ * @LastEditTime: 2023-07-24 15:16:24
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\README.md
  * @Description: 🎉🎉🎉
@@ -30,6 +30,9 @@ https://blog.csdn.net/m0_46555380/article/details/127314553
 # Uncaught TypeError: Error in invocation of tabs.sendMessage(integer tabId, any message, optional object options, optional function callback): No matching signature.
 发送消息的时候 tabid应该是一个数字
 
+
+# The "background.persistent" key cannot be used with manifest_version 3. Use the "background.service_worker" key instead.
+
 domDiv.getAttribute("data-index")
 
 favIconUrl
@@ -42,3 +45,7 @@ https://www.zhangxinxu.com/wordpress/2019/05/css-transfer-animation/
 # 浏览器插件 监听tab页关闭
 
 https://www.bytenote.net/article/175316400598941697
+
+# manifest v3
+https://juejin.cn/post/7000363901221093412
+https://juejin.cn/post/7021072232461893639#heading-11
