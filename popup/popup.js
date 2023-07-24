@@ -12,15 +12,39 @@ const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
 const voltaMaskBox = document.getElementById("maskBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
-let taskList = {};
-chrome.runtime.sendMessage({ type: 'get', from: 'popup' }, (response) => {
-    taskList = response?.taskInfoList;
-    // 执行根据tablist 添加
+// chrome.runtime.sendMessage({ type: 'get', from: 'popup' }, (response) => {
+//     taskList = response?.taskInfoList;
+//     // 执行根据tablist 添加
+//     let addList = Object.values(taskList);
+//     if (addList.length > 0) {
+//         addNewIcoDom(addList)
+//     }
+// });
+
+// chrome.storage.session.get('vlotaTaskList', (result) => {
+//     let addList = Object.values(result.vlotaTaskList);
+//     if (addList.length > 0) {
+//         addNewIcoDom(addList)
+//     }
+// })
+
+const getTaskList = () => {
+    return new Promise((resolve, reject) => {
+        chrome.storage.session.get('vlotaTaskList', (result) => {
+            resolve(result?.vlotaTaskList || [])
+        })
+    })
+}
+
+const initTask = async () => {
+    let taskList = await getTaskList();
     let addList = Object.values(taskList);
     if (addList.length > 0) {
         addNewIcoDom(addList)
     }
-});
+
+}
+initTask();
 // var bg = chrome.extension.getBackgroundPage(); v2版本
 // console.log('taskList', bg)
 // chrome.stroge.session.set({})
@@ -71,7 +95,7 @@ if (startTaskDom) {
                     tabId: tabs[0].id,
                     time: currentTime
                 },
-                (response) => {
+                async (response) => {
                     console.log('response popup', response)
                     //向background 通信 更新 taskList的值
                     const addData = {
@@ -84,15 +108,25 @@ if (startTaskDom) {
                         count: 1,
                         nexttime: response?.nextTime
                     }
-                    chrome.runtime.sendMessage({ from: 'popup', type: 'add', addData }, (response) => {
-                        // 执行根据tablist 添加
-                        if (taskList.hasOwnProperty(tabs[0].id)) {
-                            updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
-                        } else {
-                            addNewIcoDom([addData]);
-                        }
-                        taskList = response?.taskInfoList;
-                    })
+                    let taskList = await getTaskList();
+                    if (taskList.hasOwnProperty(tabs[0].id)) {
+                        updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
+                    } else {
+                        addNewIcoDom([addData]);
+                    }
+                    chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
+
+                    // chrome.storage.session.set({ vlotaTaskList: '2323' })
+
+                    // chrome.runtime.sendMessage({ from: 'popup', type: 'add', addData }, (response) => {
+                    //     if (taskList.hasOwnProperty(tabs[0].id)) {
+                    //         updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
+                    //     } else {
+                    //         addNewIcoDom([addData]);
+                    //     }
+                    //     taskList = response?.taskInfoList;
+                    // })
+
                     // taskList[tabs[0].id].nexttime = response?.nextTime;
                     // addNewIcoDom([addData])
                 }
@@ -135,7 +169,8 @@ timeBoxDom.onclick = (e) => {
     }
 }
 //打开任务详情
-icoBox.onclick = (e) => {
+icoBox.onclick = async (e) => {
+    let taskList = await getTaskList();
     const taskInfoData = taskList[e.target.id];
     document.getElementById('iconVolta').src = taskInfoData.icon;
     ['url', 'time', 'count', 'nexttime', 'title', 'id'].forEach(f => {
@@ -154,24 +189,24 @@ document.getElementById('closeTaskDetail').onclick = (e) => {
     voltaMaskBox.classList.add('mask-box-out');
 }
 //停止任务
-document.getElementById('stopTask').onclick = (e) => {
+document.getElementById('stopTask').onclick = async (e) => {
     const id = document.getElementById('stopTask').getAttribute('data-id');
+    let taskList = await getTaskList();
     chrome.tabs.sendMessage(
         +id,
         {
             type: 'stop',
         },
-        (response) => {
-            voltaMaskBox.classList.remove('mask-box-in');
-            voltaMaskBox.classList.add('mask-box-out');
-            chrome.runtime.sendMessage({ type: 'delete', from: 'popup', id }, (result) => {
-                if (result.message === 'ok') {
-                    document.getElementById(id).remove();
-                } else {
-                    alert('停止失败！')
-                }
-            });
-
+        async (response) => {
+            if (taskList.hasOwnProperty(id)) {
+                voltaMaskBox.classList.remove('mask-box-in');
+                voltaMaskBox.classList.add('mask-box-out');
+                delete taskList[id];
+                document.getElementById(id).remove();
+                chrome.storage.session.set({ vlotaTaskList: { ...taskList } })
+            } else {
+                alert('停止任务失败！')
+            }
         }
     );
 
