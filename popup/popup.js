@@ -92,9 +92,9 @@ if (startTaskDom) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             console.log('tabs', tabs[0])
             //向conent-script 通信
-            chrome.windows.get(tabs[0].windowId, (res) => {
-                console.log('res======>', res)
-            })
+            // chrome.windows.get(tabs[0].windowId, (res) => {
+            //     console.log('res======>', res)
+            // })
             chrome.tabs.sendMessage(
                 tabs[0].id,
                 {
