@@ -1,6 +1,5 @@
 // let taskInfoList = {};
 console.log('chrome bg', chrome)
-// chrome.storage.session.set({ fan: '2323' })
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // if (request?.from === 'popup') {
@@ -49,9 +48,21 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     message: `TaskList Has Not Own Property ${tab.id}`
                 })
             }
-
         })
 
     }
 }
 );
+
+chrome.windows.onRemoved.addListener((winid) => {
+    chrome.storage.session.get('vlotaTaskList', (result) => {
+        const taskInfoList = result?.vlotaTaskList || {};
+        const tabsIdList = Object.keys(taskInfoList);
+        tabsIdList.forEach(id => {
+            if (taskInfoList[id].winId == winid) {
+                delete taskInfoList[id]
+            }
+        })
+        chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
+    })
+})
