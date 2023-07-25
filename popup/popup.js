@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-24 17:11:12
+ * @LastEditTime: 2023-07-25 15:04:45
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -12,6 +12,8 @@ const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
 const voltaMaskBox = document.getElementById("maskBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
+const defaultImgUrl = chrome.runtime.getURL("icons/icon.png")
+
 // chrome.runtime.sendMessage({ type: 'get', from: 'popup' }, (response) => {
 //     taskList = response?.taskInfoList;
 //     // 执行根据tablist 添加
@@ -60,8 +62,8 @@ finalTimeItem = null;
 const addNewIcoDom = (icoData) => {
     let finalIcoHtml = icoData.reduce((acc, cur, index, arr) => `
     ${acc}
-    <div class='ico-item' 
-    style="background:url('${cur.icon}')"
+    <img class='ico-item' 
+    src="${cur.icon}"
     id='${cur.id}' 
     title='${cur.title}'
     data-icon='${cur.icon}'
@@ -71,7 +73,9 @@ const addNewIcoDom = (icoData) => {
     data-time='${cur.time}' 
     data-nexttime='${cur.nexttime}'
     data-title='${cur.title}'
-    ></div>
+    width='32px'
+    height='32px'
+    />
     `, '')
     icoBoxDom.innerHTML = `${icoBoxDom.innerHTML}
     ${finalIcoHtml}
@@ -88,6 +92,9 @@ if (startTaskDom) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             console.log('tabs', tabs[0])
             //向conent-script 通信
+            chrome.windows.get(tabs[0].windowId, (res) => {
+                console.log('res======>', res)
+            })
             chrome.tabs.sendMessage(
                 tabs[0].id,
                 {
@@ -100,7 +107,7 @@ if (startTaskDom) {
                     //向background 通信 更新 taskList的值
                     const addData = {
                         id: tabs[0].id,
-                        icon: tabs[0].favIconUrl,
+                        icon: tabs[0]?.favIconUrl || defaultImgUrl,
                         url: tabs[0].url,
                         winId: tabs[0].windowId,
                         title: tabs[0].title,
