@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-25 14:25:19
+ * @LastEditTime: 2023-07-25 15:04:45
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -12,7 +12,7 @@ const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
 const voltaMaskBox = document.getElementById("maskBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
-const defaultImgUrl = chrome.runtime.getURL("icons/icon2.png")
+const defaultImgUrl = chrome.runtime.getURL("icons/icon.png")
 
 // chrome.runtime.sendMessage({ type: 'get', from: 'popup' }, (response) => {
 //     taskList = response?.taskInfoList;

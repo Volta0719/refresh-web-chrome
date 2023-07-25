@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-24 17:16:37
+ * @LastEditTime: 2023-07-25 15:09:06
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -42,6 +42,24 @@ const voltaFormatDate = (date, format) => {
         return dict[arguments[0]]
     })
 }
+//在页面中创建一个指示定时刷新的状态指示器
+const createVoltaRefreshHtml = (time, nexttime) => {
+    const defaultImgUrl = chrome.runtime.getURL("icons/icon.png");
+    let divDom = document.createElement('div');
+    divDom.title = `每隔${time}秒刷新一次，下次刷新时间为${nexttime}。`
+    divDom.setAttribute('style', `position:fixed;
+    top:40px;
+    right:20px;
+    width:32px;
+    height:32px;
+    background:url('${defaultImgUrl}');
+    background-size:cover;
+    background-repeat:np-repeat;
+    border-radius:50%;
+    z-index:99;
+    `)
+    document.body.appendChild(divDom);
+}
 //记录时间
 const recordNextHappenTime = (time) => {
     let timeNow = new Date();
@@ -65,6 +83,7 @@ if (!!voltaSessionTime && !voltaMeta) {
     // const voltaStartTime = new Date();//获取时间
     createVoltaRefresh(voltaSessionTime);
     const nextVoltaRerfeshTime = recordNextHappenTime(voltaSessionTime);
+    createVoltaRefreshHtml(voltaSessionTime, nextVoltaRerfeshTime)
     //这个应该要做修改 要与service_work通信
     chrome.runtime.sendMessage(
         { from: 'content', nextTime: nextVoltaRerfeshTime },
@@ -80,6 +99,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sessionStorage.setItem(vloltaSessionTimeKey, request?.time || '60');//将时间修改
         createVoltaRefresh(request?.time);
         const nextVoltaRerfeshTime = recordNextHappenTime(request?.time);
+        createVoltaRefreshHtml(request?.time, nextVoltaRerfeshTime)
         sendResponse({
             nextTime: nextVoltaRerfeshTime
         })
