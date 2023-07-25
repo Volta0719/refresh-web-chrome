@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-25 15:09:06
+ * @LastEditTime: 2023-07-25 15:54:16
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -44,11 +44,18 @@ const voltaFormatDate = (date, format) => {
 }
 //在页面中创建一个指示定时刷新的状态指示器
 const createVoltaRefreshHtml = (time, nexttime) => {
+    document.styleSheets[0].insertRule(
+        `@keyframes vlotarefreshrotate{
+            0% {transform: rotate(1turn);}
+            100% {transform: rotate(0turn);}
+        }
+        `
+    );
     const defaultImgUrl = chrome.runtime.getURL("icons/icon.png");
     let divDom = document.createElement('div');
-    divDom.title = `每隔${time}秒刷新一次，下次刷新时间为${nexttime}。`
+    divDom.title = `将在${nexttime}刷新`
     divDom.setAttribute('style', `position:fixed;
-    top:40px;
+    bottom:40px;
     right:20px;
     width:32px;
     height:32px;
@@ -57,8 +64,15 @@ const createVoltaRefreshHtml = (time, nexttime) => {
     background-repeat:np-repeat;
     border-radius:50%;
     z-index:99;
+    animation-name:vlotarefreshrotate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function:linear;
+    animation-fill-mode:forwards;
     `)
+
     document.body.appendChild(divDom);
+
 }
 //记录时间
 const recordNextHappenTime = (time) => {
