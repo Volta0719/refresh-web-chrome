@@ -41,17 +41,23 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         const { tab } = sender;
         const taskInfoList = await getTaskList();
         if (taskInfoList.hasOwnProperty(tab.id)) {
-            taskInfoList[tab.id].nexttime = request?.nextTime;
-            taskInfoList[tab.id].count = (+taskInfoList[tab.id].count) + 1;
+            if (request?.type === 'update') {
+                taskInfoList[tab.id].nexttime = request?.nextTime;
+                taskInfoList[tab.id].count = (+taskInfoList[tab.id].count) + 1;
+            } else if (request?.type === 'stop') {
+                delete taskInfoList[tab.id]
+            }
+
             chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
             sendResponse({
                 message: 'ok'
             })
         } else {
             sendResponse({
-                message: `TaskList Has Not Own Property ${tab.id}`
+                message: `[${request?.type}]TaskList Has Not Own Property ${tab.id}`
             })
         }
+
     }
 }
 );
