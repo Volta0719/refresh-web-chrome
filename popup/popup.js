@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-25 10:27:32
+ * @LastEditTime: 2023-07-25 14:25:19
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -12,6 +12,7 @@ const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
 const voltaMaskBox = document.getElementById("maskBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
+const defaultImgUrl = chrome.runtime.getURL("icons/icon2.png")
 
 // chrome.runtime.sendMessage({ type: 'get', from: 'popup' }, (response) => {
 //     taskList = response?.taskInfoList;
@@ -106,7 +107,7 @@ if (startTaskDom) {
                     //向background 通信 更新 taskList的值
                     const addData = {
                         id: tabs[0].id,
-                        icon: tabs[0].favIconUrl,
+                        icon: tabs[0]?.favIconUrl || defaultImgUrl,
                         url: tabs[0].url,
                         winId: tabs[0].windowId,
                         title: tabs[0].title,
