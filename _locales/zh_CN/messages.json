@@ -28,5 +28,11 @@
    },
    "closeTaskDetailTitle":{
       "message":"关闭详情页面"   
+   },
+   "contentConfirmText":{
+      "message":"停止该网页的自动刷新任务？"
+   },
+   "contentAlreadylog":{
+      "message":"[VoltaRefresh]:已存在刷新任务，调整刷新时间间隔为"
    }
 }

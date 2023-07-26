@@ -28,5 +28,11 @@
    },
    "closeTaskDetailTitle":{
       "message":"Close the details page"   
+   },
+   "contentConfirmText":{
+      "message":"Stop the refresh task for this webpage?"
+   },
+   "contentAlreadylog":{
+      "message":"[VoltaRefresh]:A refresh task already exists, adjust the refresh interval to "
    }
 }

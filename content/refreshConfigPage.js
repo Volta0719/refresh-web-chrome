@@ -1,12 +1,14 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-25 16:44:58
+ * @LastEditTime: 2023-07-26 11:44:55
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
  */
 console.log('chrome', chrome)
+const a = chrome.i18n.getMessage("name")
+console.log('aaaa', a)
 // chrome.alarms.create({delayInMinutes: 3.0})
 const id = chrome?.runtime?.id || ''
 const vloltaSessionTimeKey = `voltaTime_${id}`
@@ -45,7 +47,7 @@ const voltaFormatDate = (date, format) => {
 //在页面中创建一个指示定时刷新的状态指示器
 const createVoltaRefreshHtml = (time, nexttime) => {
     if (!!document.getElementById('voltaIcon')) {
-        document.getElementById('voltaIcon').title = `将在${nexttime}刷新`;
+        document.getElementById('voltaIcon').title = `${chrome.i18n.getMessage("nextHappen")}:${nexttime}`;
     } else {
         const style = document.createElement('style')
         style.appendChild(document.createTextNode(`
@@ -57,7 +59,7 @@ const createVoltaRefreshHtml = (time, nexttime) => {
         document.getElementsByTagName('head')[0].appendChild(style)
         const defaultImgUrl = chrome.runtime.getURL("icons/icon.png");
         let divDom = document.createElement('div');
-        divDom.title = `将在${nexttime}刷新`;
+        divDom.title = `${chrome.i18n.getMessage("nextHappen")}:${nexttime}`;
         divDom.id = 'voltaIcon';
         divDom.setAttribute('style', `position:fixed;
         top:50%;
@@ -79,10 +81,8 @@ const createVoltaRefreshHtml = (time, nexttime) => {
         `)
 
         document.body.appendChild(divDom);
-        console.log("document.getElementById('voltaIcon')", [document.getElementById('voltaIcon')])
         document.getElementById('voltaIcon').onclick = (e) => {
-            console.log('hello');
-            let f = confirm('停止该网页的自动刷新任务？');
+            let f = confirm(chrome.i18n.getMessage("contentConfirmText"));
             if (f) {
                 chrome.runtime.sendMessage(
                     { from: 'content', type: 'stop' },
@@ -110,7 +110,7 @@ const recordNextHappenTime = (time) => {
 }
 const createVoltaRefresh = (time = '60', name = vloltaSessionTimeKey) => {
     if (!!document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`)) {
-        console.log(`已存在voltarefresh任务，已调整刷新时间为${time}秒`)
+        console.log(`${chrome.i18n.getMessage("contentAlreadylog")}${time}s`)
         document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`).content = time;
     } else {
         const voltaCreateMeta = document.createElement('meta');
@@ -150,7 +150,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`).remove();
         sendResponse({ message: "ok" });
     }
-
 });
 
 // chrome.runtime.sendMessage(
