@@ -1,0 +1,38 @@
+{
+   "description": {
+      "message": "定时刷新以保持页面的登录状态"
+   },
+   "name": {
+      "message": "定时刷新页面"
+   },
+   "timetitle": {
+      "message": "刷新间隔（秒）"
+   },
+   "startTask": {
+      "message": "添 加"
+   },
+   "startTaskTitle": {
+      "message": "为当前页面添加定时刷新任务，如果已存在将会修改配置"
+   },
+   "detailCount": {
+      "message": "刷新次数"
+   },
+   "nextHappen": {
+      "message": "下次刷新时间"
+   },
+   "weburl":{
+      "message":"网页地址"
+   },
+   "stopTaskTitle":{
+      "message":"停止自动刷新任务"
+   },
+   "closeTaskDetailTitle":{
+      "message":"关闭详情页面"   
+   },
+   "contentConfirmText":{
+      "message":"停止该网页的自动刷新任务？"
+   },
+   "contentAlreadylog":{
+      "message":"[VoltaRefresh]:已存在刷新任务，调整刷新时间间隔为"
+   }
+}

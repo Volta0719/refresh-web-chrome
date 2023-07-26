@@ -1,8 +1,10 @@
 {
-    "name": "Refresh Web Page Regularly",
+    "author":"24min",
+    "name": "__MSG_name__",
     "version": "0.0.0.1",
     "manifest_version": 3,
-    "description": "An extension which is High-performance scheduled refresh of web pages to keep your pages signed in",
+    "default_locale": "en",
+    "description": "__MSG_description__",
     "icons": {
         "16": "icons/icon.png",
         "32": "icons/icon.png",

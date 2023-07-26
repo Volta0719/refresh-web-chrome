@@ -1,0 +1,38 @@
+{
+   "description": {
+      "message": "定期的に更新して、ページをログインしたままにします"
+   },
+   "name": {
+      "message": "ページを定期的に更新する"
+   },
+   "timetitle": {
+      "message": "更新間隔 (秒)"
+   },
+   "startTask": {
+      "message": "足 す"
+   },
+   "startTaskTitle": {
+      "message": "現在のページにスケジュールされた更新タスクを追加し、構成が既に存在する場合は変更します"
+   },
+   "detailCount": {
+      "message": "更新回数"
+   },
+   "nextHappen": {
+      "message": "次回の更新時刻"
+   },
+   "weburl": {
+      "message": "リンク"
+   },
+   "stopTaskTitle": {
+      "message": "更新タスクを停止する"
+   },
+   "closeTaskDetailTitle": {
+      "message": "詳細ページを閉じる"
+   },
+   "contentConfirmText": {
+      "message": "このページの更新タスクを停止しますか?"
+   },
+   "contentAlreadylog": {
+      "message": "[VoltaRefresh]:更新タスクが既に存在する場合は、更新間隔を次のように調整します"
+   }
+}
