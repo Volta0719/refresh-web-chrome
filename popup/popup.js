@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-25 15:04:45
+ * @LastEditTime: 2023-07-26 08:51:58
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -92,9 +92,9 @@ if (startTaskDom) {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             console.log('tabs', tabs[0])
             //向conent-script 通信
-            chrome.windows.get(tabs[0].windowId, (res) => {
-                console.log('res======>', res)
-            })
+            // chrome.windows.get(tabs[0].windowId, (res) => {
+            //     console.log('res======>', res)
+            // })
             chrome.tabs.sendMessage(
                 tabs[0].id,
                 {

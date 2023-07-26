@@ -44,57 +44,62 @@ const voltaFormatDate = (date, format) => {
 }
 //在页面中创建一个指示定时刷新的状态指示器
 const createVoltaRefreshHtml = (time, nexttime) => {
-    const style = document.createElement('style')
-    style.appendChild(document.createTextNode(`
-    @keyframes vlotarefreshrotate{
-        0% {transform: rotate(1turn);}
-        100% {transform: rotate(0turn);}
-    }
-    `));
-    document.getElementsByTagName('head')[0].appendChild(style)
-    const defaultImgUrl = chrome.runtime.getURL("icons/icon.png");
-    let divDom = document.createElement('div');
-    divDom.title = `将在${nexttime}刷新`;
-    divDom.id = 'voltaIcon';
-    divDom.setAttribute('style', `position:fixed;
-    top:50%;
-    transform:translateY(-50%);
-    margin:auto;
-    right:20px;
-    width:32px;
-    height:32px;
-    background:url('${defaultImgUrl}');
-    background-size:cover;
-    background-repeat:np-repeat;
-    border-radius:50%;
-    z-index:99;
-    animation-name:vlotarefreshrotate;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-timing-function:linear;
-    animation-fill-mode:forwards;
-    `)
+    if (!!document.getElementById('voltaIcon')) {
+        document.getElementById('voltaIcon').title = `将在${nexttime}刷新`;
+    } else {
+        const style = document.createElement('style')
+        style.appendChild(document.createTextNode(`
+        @keyframes vlotarefreshrotate{
+            0% {transform: rotate(1turn);}
+            100% {transform: rotate(0turn);}
+        }
+        `));
+        document.getElementsByTagName('head')[0].appendChild(style)
+        const defaultImgUrl = chrome.runtime.getURL("icons/icon.png");
+        let divDom = document.createElement('div');
+        divDom.title = `将在${nexttime}刷新`;
+        divDom.id = 'voltaIcon';
+        divDom.setAttribute('style', `position:fixed;
+        top:50%;
+        transform:translateY(-50%);
+        margin:auto;
+        right:20px;
+        width:32px;
+        height:32px;
+        background:url('${defaultImgUrl}');
+        background-size:cover;
+        background-repeat:np-repeat;
+        border-radius:50%;
+        z-index:99;
+        animation-name:vlotarefreshrotate;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-timing-function:linear;
+        animation-fill-mode:forwards;
+        `)
 
-    document.body.appendChild(divDom);
-    console.log("document.getElementById('voltaIcon')", [document.getElementById('voltaIcon')])
-    document.getElementById('voltaIcon').onclick = (e) => {
-        console.log('hello');
-        let f = confirm('停止该网页的自动刷新任务？');
-        if (f) {
-            chrome.runtime.sendMessage(
-                { from: 'content', type: 'stop' },
-                (response) => {
-                    sessionStorage.removeItem(vloltaSessionTimeKey);
-                    location.reload();
-                }
-            );
+        document.body.appendChild(divDom);
+        console.log("document.getElementById('voltaIcon')", [document.getElementById('voltaIcon')])
+        document.getElementById('voltaIcon').onclick = (e) => {
+            console.log('hello');
+            let f = confirm('停止该网页的自动刷新任务？');
+            if (f) {
+                chrome.runtime.sendMessage(
+                    { from: 'content', type: 'stop' },
+                    (response) => {
+                        sessionStorage.removeItem(vloltaSessionTimeKey);
+                        location.reload();
+                    }
+                );
+            }
+        }
+        document.getElementById('voltaIcon').oncontextmenu = (e) => {
+            e.preventDefault();
+            e.target.style.display = "none";
+            // console.log('hello right')
         }
     }
-    document.getElementById('voltaIcon').oncontextmenu = (e) => {
-        e.preventDefault();
-        e.target.style.display = "none";
-        // console.log('hello right')
-    }
+
 }
 //记录时间
 const recordNextHappenTime = (time) => {
