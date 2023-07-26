@@ -1,13 +1,55 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-25 15:04:45
+ * @LastEditTime: 2023-07-26 11:21:43
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
  */
 console.log('chrome popup', chrome)
-const startTaskDom = document.getElementById("startTask");
+const htmli18nList = {
+    name: [{
+        props: 'innerText',
+        value: 'name',
+    }],//主标题
+    timetitle: [{
+        props: 'innerText',
+        value: 'timetitle'
+    }],//定义刷新时间
+    startTask: [{
+        props: 'innerText',
+        value: 'startTask'
+    }, {
+        props: 'title',
+        value: 'startTaskTitle'
+    }],//启动按钮
+    detailtime: [{
+        props: 'innerText',
+        value: 'timetitle'
+    }],
+    detailCount:[{
+        props:'innerText',
+        value:'detailCount'
+    }],
+    nextHappen:[{
+        props:'innerText',
+        value:'nextHappen'
+    }],
+    weburl:[{
+       props:'innerText',
+       value:'weburl'
+    }],
+    stopTask:[{
+        props:'title',
+        value:'stopTaskTitle'
+    }],
+    closeTaskDetail:[{
+        props:'title',
+        value:'closeTaskDetailTitle'
+    }]
+
+}
+const startTaskDom = document.getElementById("voltastartTask");
 const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
 const voltaMaskBox = document.getElementById("maskBox");
@@ -39,6 +81,10 @@ const getTaskList = () => {
 }
 
 const initTask = async () => {
+    Object.keys(htmli18nList).forEach(ele => {
+        let dom = document.getElementById(`volta${ele}`);
+        htmli18nList[ele].forEach(f => dom[f.props] = chrome.i18n.getMessage(f.value))
+    })
     let taskList = await getTaskList();
     let addList = Object.values(taskList);
     if (addList.length > 0) {
@@ -186,18 +232,18 @@ icoBox.onclick = async (e) => {
             document.getElementById(`${f}Volta`).title = taskInfoData[f]
         }
     })
-    document.getElementById('stopTask').setAttribute('data-id', e.target.id)
+    document.getElementById('voltastopTask').setAttribute('data-id', e.target.id)
     voltaMaskBox.classList.remove('mask-box-out');
     voltaMaskBox.classList.add('mask-box-in');
 }
 
-document.getElementById('closeTaskDetail').onclick = (e) => {
+document.getElementById('voltacloseTaskDetail').onclick = (e) => {
     voltaMaskBox.classList.remove('mask-box-in');
     voltaMaskBox.classList.add('mask-box-out');
 }
 //停止任务
-document.getElementById('stopTask').onclick = async (e) => {
-    const id = document.getElementById('stopTask').getAttribute('data-id');
+document.getElementById('voltastopTask').onclick = async (e) => {
+    const id = document.getElementById('voltastopTask').getAttribute('data-id');
     let taskList = await getTaskList();
     chrome.tabs.sendMessage(
         +id,

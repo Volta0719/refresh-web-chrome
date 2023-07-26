@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:43:02
- * @LastEditTime: 2023-07-24 15:16:24
+ * @LastEditTime: 2023-07-26 10:16:08
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\README.md
  * @Description: 🎉🎉🎉
@@ -49,3 +49,17 @@ https://www.bytenote.net/article/175316400598941697
 # manifest v3
 https://juejin.cn/post/7000363901221093412
 https://juejin.cn/post/7021072232461893639#heading-11
+
+# 阻止进入休眠状态
+https://microsoftedge.microsoft.com/addons/detail/%E9%98%B2%E6%AD%A2%E4%BC%91%E7%9C%A0%E6%88%96%E5%B1%8F%E5%B9%95%E5%85%B3%E9%97%AD/gpcjnpdkecmdghbnkeifiljlknkjhjke?hl=zh-CN
+
+https://microsoftedge.microsoft.com/addons/detail/keep-awake-display-sys/jjaendaehnalocdginbjmaclfjgidlla
+
+# webpack 打包
+https://juejin.cn/post/7100839194641039368
+https://juejin.cn/post/7008702136666030111
+https://blog.csdn.net/qq_44859233/article/details/121593705
+https://blog.csdn.net/weixin_43334673/article/details/107687418
+
+https://blog.csdn.net/Primary_wind/article/details/128053613
+https://developer.chrome.com/extensions/i18n
