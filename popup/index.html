@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:45:22
- * @LastEditTime: 2023-07-25 15:16:34
+ * @LastEditTime: 2023-07-26 11:12:54
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\index.html
  * @Description: 🎉🎉🎉
@@ -247,7 +247,7 @@
                 </div>
                 <div class="volta-flex">
                     <!--stop-->
-                    <div title="停止自动刷新任务" class="btn-icon" id="stopTask">
+                    <div class="btn-icon" id="voltastopTask">
                         <svg t="1690161658896" class="icon" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="1664" width="24" height="24">
                             <path
@@ -259,7 +259,7 @@
                         </svg>
                     </div>
                     <!--close-->
-                    <div title="关闭任务详情" class="btn-icon" id="closeTaskDetail">
+                    <div class="btn-icon" id="voltacloseTaskDetail">
                         <svg t="1690161834285" class="icon" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="2114" width="24" height="24">
                             <path
@@ -275,17 +275,17 @@
 
             <div class="volta-flex">
                 <div class="detail-item flex1">
-                    <div class="detai-title">刷新间隔（秒）</div>
+                    <div class="detai-title" id="voltadetailtime"></div>
                     <div id="timeVolta"></div>
                 </div>
                 <div class="detail-item flex1">
-                    <div class="detai-title">已刷新次数</div>
+                    <div class="detai-title" id="voltadetailCount"></div>
                     <div id="countVolta"></div>
                 </div>
             </div>
             <div class="volta-flex">
                 <div class="detail-item flex1">
-                    <div class="detai-title">下次刷新时间</div>
+                    <div class="detai-title" id="voltanextHappen"></div>
                     <div id="nexttimeVolta"></div>
                 </div>
                 <div class="detail-item flex1">
@@ -294,15 +294,15 @@
                 </div>
             </div>
             <div class="detail-item">
-                <div class="detai-title">网页地址</div>
+                <div class="detai-title" id="voltaweburl"></div>
                 <div id="urlVolta"></div>
             </div>
         </div>
-        <div class="page-title">Refresh Web Page Regularly</div>
+        <div class="page-title" id="voltaname"></div>
         <div class="top-header volta-flex">
-            <p>定义刷新时间(秒)</p>
+            <p id="voltatimetitle"></p>
             <!-- <div class="add-btn">添 加</div> -->
-            <button id="startTask" class="add-btn" title="为当前页面添加定时刷新任务">添 加</button>
+            <button id="voltastartTask" class="add-btn"></button>
 
         </div>
         <div class="time-box volta-flex" id="timeBox"></div>

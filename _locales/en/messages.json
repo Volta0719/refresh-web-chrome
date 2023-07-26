@@ -1,0 +1,32 @@
+{
+   "description": {
+      "message": "An extension which is scheduled refresh of web pages to keep your pages signed in"
+   },
+   "name": {
+      "message": "Refresh Web Page Regularly"
+   },
+   "timetitle": {
+      "message": "Refresh interval (s)"
+   },
+   "startTask": {
+      "message": "Add"
+   },
+   "startTaskTitle": {
+      "message": "Adds a scheduled refresh task for the current page, and modifies the configuration if it already exists"
+   },
+   "detailCount": {
+      "message": "Number of refreshes"
+   },
+   "nextHappen": {
+      "message": "Next refresh time"
+   },
+   "weburl": {
+      "message": "Web page"
+   },
+   "stopTaskTitle":{
+      "message":"Stop the refresh task"
+   },
+   "closeTaskDetailTitle":{
+      "message":"Close the details page"   
+   }
+}
