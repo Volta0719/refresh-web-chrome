@@ -1,14 +1,12 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-26 11:44:55
+ * @LastEditTime: 2023-07-26 14:05:55
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
  */
 console.log('chrome', chrome)
-const a = chrome.i18n.getMessage("name")
-console.log('aaaa', a)
 // chrome.alarms.create({delayInMinutes: 3.0})
 const id = chrome?.runtime?.id || ''
 const vloltaSessionTimeKey = `voltaTime_${id}`
@@ -72,7 +70,7 @@ const createVoltaRefreshHtml = (time, nexttime) => {
         background-size:cover;
         background-repeat:np-repeat;
         border-radius:50%;
-        z-index:99;
+        z-index:999;
         animation-name:vlotarefreshrotate;
         animation-duration: 1s;
         animation-iteration-count: infinite;
@@ -147,8 +145,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request?.type === 'stop') {
         //停止
         sessionStorage.removeItem(vloltaSessionTimeKey);
-        document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`).remove();
+        // document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`).remove();
         sendResponse({ message: "ok" });
+        location.reload();
+
     }
 });
 
