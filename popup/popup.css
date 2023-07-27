@@ -185,6 +185,38 @@ body {
 
 }
 
+
+.radio-box:first-of-type {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+.radio-label {
+    margin-right: 15px;
+    line-height: 32px;
+}
+
+.radio-item {
+    appearance: none;
+
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid #999;
+    transition: 0.2s all linear;
+    margin-right: 5px;
+
+    position: relative;
+    top: 4px;
+}
+
+.radio-item:checked {
+    border: 6px solid black;
+}
+
+
 .mask-box-in {
     /* display: block; */
     pointer-events: auto;

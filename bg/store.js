@@ -1,4 +1,4 @@
-// let taskInfoList = {};
+// importScripts("../utils/tools.js")
 console.log('chrome bg', chrome)
 const getTaskList = () => {
     return new Promise((resolve, reject) => {
@@ -8,34 +8,6 @@ const getTaskList = () => {
     })
 }
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-    // if (request?.from === 'popup') {
-    //     if (request?.type === 'get') {
-    //         sendResponse({
-    //             taskInfoList,
-    //             message: 'ok'
-    //         })
-    //     } else if (request?.type === 'add') {
-    //         const addData = request?.addData;
-    //         taskInfoList[addData.id] = { ...addData };
-    //         sendResponse({
-    //             taskInfoList,
-    //             message: 'ok'
-    //         })
-    //     } else if (request?.type === 'delete') {
-    //         if (taskInfoList.hasOwnProperty(request?.id)) {
-    //             delete taskInfoList[request.id]
-    //             sendResponse({
-    //                 message: 'ok'
-    //             })
-    //         } else {
-    //             sendResponse({
-    //                 message: `taskInfoList has no id(${request?.id})`
-    //             })
-    //         }
-
-    //     }
-    // } 
-
     if (request?.from === 'content') {
         //保留  然后通过存到session
         const { tab } = sender;
@@ -47,17 +19,31 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             } else if (request?.type === 'stop') {
                 delete taskInfoList[tab.id]
             }
-
-            chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
+            await chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
             sendResponse({
+                from:'bg',
                 message: 'ok'
             })
         } else {
             sendResponse({
+                from:'bg',
                 message: `[${request?.type}]TaskList Has Not Own Property ${tab.id}`
             })
         }
+    }else if(request?.from === 'popup'){
+        const taskInfoList = await getTaskList();//这边应该是 获取所有的alarms todo
+        if(taskInfoList.hasOwnProperty(request?.tabId)){
 
+        }else{
+            let minutes= +request?.time / 60
+            await chrome.alarms.create(request?.tabId || 'volta-id', {
+                periodInMinutes: minutes.toFixed(2)
+            });
+            sendResponse({
+                from:'bg',
+                message:'ok'
+            })
+        }
     }
 }
 );

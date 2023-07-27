@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-26 14:05:55
+ * @LastEditTime: 2023-07-27 15:25:45
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -12,36 +12,7 @@ const id = chrome?.runtime?.id || ''
 const vloltaSessionTimeKey = `voltaTime_${id}`
 const voltaMeta = document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`)
 const voltaSessionTime = sessionStorage.getItem(vloltaSessionTimeKey)
-//格式化时间
-const voltaFormatDate = (date, format) => {
-    if (!date) return
-    if (!format) format = 'yyyy-MM-dd'
-    switch (typeof date) {
-        case 'string':
-            date = new Date(date)
-            break
-        case 'number':
-            date = new Date(date)
-            break
-    }
-    if (!(date instanceof Date)) return false
-    let dict = {
-        'yyyy': date.getFullYear(),
-        'M': date.getMonth() + 1,
-        'd': date.getDate(),
-        'H': date.getHours(),
-        'm': date.getMinutes(),
-        's': date.getSeconds(),
-        'MM': ('' + (date.getMonth() + 101)).substr(1),
-        'dd': ('' + (date.getDate() + 100)).substr(1),
-        'HH': ('' + (date.getHours() + 100)).substr(1),
-        'mm': ('' + (date.getMinutes() + 100)).substr(1),
-        'ss': ('' + (date.getSeconds() + 100)).substr(1)
-    }
-    return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function () {
-        return dict[arguments[0]]
-    })
-}
+
 //在页面中创建一个指示定时刷新的状态指示器
 const createVoltaRefreshHtml = (time, nexttime) => {
     if (!!document.getElementById('voltaIcon')) {
@@ -97,14 +68,6 @@ const createVoltaRefreshHtml = (time, nexttime) => {
             // console.log('hello right')
         }
     }
-
-}
-//记录时间
-const recordNextHappenTime = (time) => {
-    let timeNow = new Date();
-    let nowSecond = timeNow.getSeconds();
-    timeNow.setSeconds(+time + nowSecond);
-    return voltaFormatDate(timeNow, 'yyyy-MM-dd HH:mm:ss')
 }
 const createVoltaRefresh = (time = '60', name = vloltaSessionTimeKey) => {
     if (!!document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`)) {
@@ -140,6 +103,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const nextVoltaRerfeshTime = recordNextHappenTime(request?.time);
         createVoltaRefreshHtml(request?.time, nextVoltaRerfeshTime)
         sendResponse({
+            from: 'content',
+            type:'add',
             nextTime: nextVoltaRerfeshTime
         })
     } else if (request?.type === 'stop') {
