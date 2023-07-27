@@ -34,5 +34,14 @@
    },
    "contentAlreadylog":{
       "message":"[VoltaRefresh]:A refresh task already exists, adjust the refresh interval to "
+   },
+   "refreshTypeDesc":{
+        "message":"If you have enabled the hibernation function of browser tabs, the default refresh will not work after the tab is hibernated. But if you don't have tab hibernation turned on, both refresh methods will work. In addition, when you choose the long-lasting refresh method, we will stop the computer from sleeping."
+   },
+   "metaRefreshType":{
+      "message":"default"
+   },
+   "alarmsRefreshType":{
+      "message":"long-lasting"
    }
 }

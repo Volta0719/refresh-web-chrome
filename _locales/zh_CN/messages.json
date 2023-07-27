@@ -34,5 +34,14 @@
    },
    "contentAlreadylog":{
       "message":"[VoltaRefresh]:已存在刷新任务，调整刷新时间间隔为"
+   },
+   "refreshTypeDesc":{
+      "message":"如果你开启了浏览器标签页的休眠功能，那么默认刷新会在标签页休眠后无法工作。但如果你没有开启标签页的休眠，那么两种刷新方式都会正常工作。此外当你选用长久刷新方式，我们将会组止电脑进入睡眠状态。"
+ },
+   "metaRefreshType":{
+      "message":""
+   },
+   "alarmsRefreshType":{
+      "message":""
    }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-26 11:21:43
+ * @LastEditTime: 2023-07-27 09:23:56
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -49,6 +49,7 @@ const htmli18nList = {
     }]
 
 }
+const refreshType = ['meta','alarms']
 const startTaskDom = document.getElementById("voltastartTask");
 const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
