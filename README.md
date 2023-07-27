@@ -1,11 +1,3 @@
-<!--
- * @Author: fanjf
- * @Date: 2023-07-20 10:43:02
- * @LastEditTime: 2023-07-26 10:16:08
- * @LastEditors: fanjf
- * @FilePath: \refresh-web\README.md
- * @Description: 🎉🎉🎉
--->
 # refresh-web
 Refresh web pages regularly
 
@@ -63,3 +55,7 @@ https://blog.csdn.net/weixin_43334673/article/details/107687418
 
 https://blog.csdn.net/Primary_wind/article/details/128053613
 https://developer.chrome.com/extensions/i18n
+
+# 插件文档
+
+https://github.com/GoogleChrome/chrome-extensions-samples
