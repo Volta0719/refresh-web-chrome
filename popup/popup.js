@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-27 10:01:55
+ * @LastEditTime: 2023-07-27 10:46:15
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -59,6 +59,10 @@ const htmli18nList = {
         props: 'innerText',
         value: 'alarmsRefreshType'
     }],
+    refreshDesc: [{
+        props: 'innerText',
+        value: 'refreshTypeDesc'
+    }]
 
 }
 const startTaskDom = document.getElementById("voltastartTask");

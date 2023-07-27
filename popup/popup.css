@@ -170,6 +170,21 @@ body {
     margin-bottom: 8px;
 }
 
+.volta-refresh-box {
+    margin: 10px 0;
+}
+
+#voltarefreshDesc {
+    /* text-indent: 2em; */
+    margin-top: 3px;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #e6f4ff;
+    border: 1px solid #91caff;
+    /* font-family: cursive; */
+
+}
+
 .mask-box-in {
     /* display: block; */
     pointer-events: auto;
