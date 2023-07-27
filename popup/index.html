@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:45:22
- * @LastEditTime: 2023-07-26 11:12:54
+ * @LastEditTime: 2023-07-27 10:22:35
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\index.html
  * @Description: 🎉🎉🎉
@@ -10,223 +10,14 @@
 
 <head>
     <meta charset="utf-8" />
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .volta-flex {
-            display: flex;
-        }
-
-        .flex1 {
-            flex: 1;
-        }
-
-        .volta-popup-box {
-            width: 400px;
-            padding: 10px;
-            position: relative;
-            /* min-height:235px; */
-        }
-
-        .page-title {
-            height: 40px;
-            line-height: 40px;
-            font-weight: bolder;
-            font-size: 22px;
-            text-align: center;
-        }
-
-        .top-header {
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .add-btn {
-            border: 1px solid white;
-            background: #1a92ee;
-            text-transform: uppercase;
-            color: white;
-            padding: 1px 20px;
-            outline: none;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            height: 30px;
-            width: 80px;
-
-        }
-
-        .add-btn:after {
-            content: '';
-            display: block;
-            position: absolute;
-            top: -36px;
-            left: -100px;
-            background: rgb(200, 199, 194);
-            width: 30px;
-            height: 75px;
-            opacity: 20%;
-            transform: rotate(-45deg);
-        }
-
-        .add-btn:hover:after {
-            left: 120%;
-            transition: all .9s cubic-bezier(0.3, 1, 0.2, 1);
-            -webkit-transition: all .9s cubic-bezier(0.3, 1, 0.2, 1);
-        }
-
-        .time-box {
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .time-item {
-            font-size: 14px;
-            width: 25%;
-            text-align: center;
-            border: 1px solid #c8c7c7;
-            cursor: pointer;
-            margin: 5px;
-            height: 24px;
-            line-height: 24px;
-            border-radius: 5px;
-        }
-
-        .time-item-input {
-            font-size: 14px;
-            width: 25%;
-            text-align: center;
-            border: 1px solid #c8c7c7;
-            /* cursor: pointer; */
-            margin: 5px;
-            height: 24px;
-            line-height: 24px;
-            border-radius: 5px;
-        }
-
-        .volta-active {
-            background: #0b9aed;
-            color: white;
-        }
-
-        .ico-box {
-            display: flex;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-        }
-
-        .ico-item {
-            margin: 4px;
-            cursor: pointer;
-        }
-
-        .ico-item:hover,#iconVolta:hover {
-            transform: rotate(666turn);
-            transition-delay: 1s;
-            transition-property: all;
-            transition-duration: 59s;
-            transition-timing-function: cubic-bezier(.34, 0, .84, 1);
-        }
-
-        .mask-box {
-            position: absolute;
-            /* display: none; */
-            pointer-events: none;
-            opacity: 0;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            backdrop-filter: blur(8px);
-            background-color: rgba(137, 128, 133, 0.35);
-            /* padding: 20px; */
-            overflow-y: auto;
-            overflow-x: hidden;
-            /* background-color: ; */
-        }
-
-        .btn-icon {
-            cursor: pointer;
-            margin-top: 10px;
-            margin-right: 5px;
-        }
-
-        .detail-header {
-            padding: 10px;
-            justify-content: space-between;
-        }
-
-        #titleVolta {
-            margin-left: 10px;
-            font-size: 14px;
-            line-height: 40px;
-            white-space: nowrap;
-            width: 298px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .detail-item {
-            border-top: 1px solid rgb(68, 219, 224);
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        .detai-title {
-            font-weight: bolder;
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-
-        .mask-box-in {
-            /* display: block; */
-            pointer-events: auto;
-            opacity: 1;
-            z-index: 5;
-            animation: clipCircleIn .4s;
-        }
-
-        .mask-box-out {
-            animation: clipCircleOut .4s;
-        }
-
-        @keyframes clipCircleIn {
-            0% {
-                opacity: 0;
-                clip-path: inset(80%);
-            }
-
-            100% {
-                opacity: 1;
-                clip-path: inset(0%);
-            }
-        }
-
-        @keyframes clipCircleOut {
-            0% {
-                opacity: 1;
-                clip-path: inset(0%);
-
-            }
-
-            100% {
-                opacity: 0;
-                clip-path: inset(80%);
-            }
-        }
-    </style>
+    <link href="popup.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     <svg width="46" height="46" title="Volta0719" viewBox="0 0 250 250" aria-hidden="true" target="__blank"
-        style="z-index:2;cursor: pointer;right: 0px; position: fixed; left: initial; transform: scale(1, 1); bottom: initial; top: 0px;"
-        title="https://github.com/Volta0719/refresh-web">
+        style="z-index:2;cursor: pointer;right: 0px; position: fixed; left: initial; transform: scale(1, 1); bottom: initial; top: 0px;">
         <a href="https://github.com/Volta0719/refresh-web" target="_blank" rel="nofollow sponsored"
-            style="fill: rgb(21, 21, 19); color: rgb(255, 255, 255);">
+            style="fill: rgb(21, 21, 19); color: rgb(255, 255, 255);" title="https://github.com/Volta0719/refresh-web">
             <g>
                 <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
                 <path
@@ -306,7 +97,17 @@
 
         </div>
         <div class="time-box volta-flex" id="timeBox"></div>
+
         <!-- <p>或者自定义事件 https://www.w3school.com.cn/ui2019/logo-32-red.png</p> -->
+        <div>
+            <p id="voltarefreshType"></p>
+            <div>
+                <input type="radio" id="refresh" value="meta" name="contact" checked />
+                <label for="refresh" id="voltametaLabel"></label>
+                <input type="radio" value="alarms" id="alarms" name="contact" />
+                <label for="alarms" id="voltaalarmsLabel"></label>
+            </div>
+        </div>
         <hr />
         <div class="ico-box" id="icoBox">
             <!-- <div class="ico-item" style="background: url('https://www.w3school.com.cn/ui2019/logo-32-red.png');"></div> -->

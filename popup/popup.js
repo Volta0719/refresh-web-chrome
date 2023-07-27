@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-27 09:23:56
+ * @LastEditTime: 2023-07-27 10:01:55
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -27,29 +27,40 @@ const htmli18nList = {
         props: 'innerText',
         value: 'timetitle'
     }],
-    detailCount:[{
-        props:'innerText',
-        value:'detailCount'
+    detailCount: [{
+        props: 'innerText',
+        value: 'detailCount'
     }],
-    nextHappen:[{
-        props:'innerText',
-        value:'nextHappen'
+    nextHappen: [{
+        props: 'innerText',
+        value: 'nextHappen'
     }],
-    weburl:[{
-       props:'innerText',
-       value:'weburl'
+    weburl: [{
+        props: 'innerText',
+        value: 'weburl'
     }],
-    stopTask:[{
-        props:'title',
-        value:'stopTaskTitle'
+    stopTask: [{
+        props: 'title',
+        value: 'stopTaskTitle'
     }],
-    closeTaskDetail:[{
-        props:'title',
-        value:'closeTaskDetailTitle'
-    }]
+    closeTaskDetail: [{
+        props: 'title',
+        value: 'closeTaskDetailTitle'
+    }],
+    refreshType: [{
+        props: 'innerText',
+        value: 'refreshTypeTitle'
+    }],
+    metaLabel: [{
+        props: 'innerText',
+        value: 'metaRefreshType'
+    }],
+    alarmsLabel: [{
+        props: 'innerText',
+        value: 'alarmsRefreshType'
+    }],
 
 }
-const refreshType = ['meta','alarms']
 const startTaskDom = document.getElementById("voltastartTask");
 const timeBoxDom = document.getElementById("timeBox");
 const icoBoxDom = document.getElementById("icoBox");
