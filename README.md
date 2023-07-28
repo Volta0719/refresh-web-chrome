@@ -1,7 +1,7 @@
 <!--
  * @Author: fanjf
  * @Date: 2023-07-20 10:43:02
- * @LastEditTime: 2023-07-26 10:16:08
+ * @LastEditTime: 2023-07-28 11:46:37
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\README.md
  * @Description: 🎉🎉🎉
@@ -63,3 +63,17 @@ https://blog.csdn.net/weixin_43334673/article/details/107687418
 
 https://blog.csdn.net/Primary_wind/article/details/128053613
 https://developer.chrome.com/extensions/i18n
+
+# 插件文档
+
+https://github.com/GoogleChrome/chrome-extensions-samples
+
+
+
+# 额外的
+
+1. 增加await 失败的处理方式 低优先级
+2. webpack 打包js html代码 中优先级
+3. 上传到edge和chrome应用商店 中优先级  这周末尽量上传一个包
+4. 电源模式的更改 更改完成之后做提示?或者还是做一个选项 让用户选？第一个版本西安不做选项？
+5. 获取所有闹钟 以及删除闹钟的功能  高优先级 下午

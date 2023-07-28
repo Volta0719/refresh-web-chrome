@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-26 11:21:43
+ * @LastEditTime: 2023-07-28 14:59:31
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -27,25 +27,45 @@ const htmli18nList = {
         props: 'innerText',
         value: 'timetitle'
     }],
-    detailCount:[{
-        props:'innerText',
-        value:'detailCount'
+    detailCount: [{
+        props: 'innerText',
+        value: 'detailCount'
     }],
-    nextHappen:[{
-        props:'innerText',
-        value:'nextHappen'
+    nextHappen: [{
+        props: 'innerText',
+        value: 'nextHappen'
     }],
-    weburl:[{
-       props:'innerText',
-       value:'weburl'
+    weburl: [{
+        props: 'innerText',
+        value: 'weburl'
     }],
-    stopTask:[{
-        props:'title',
-        value:'stopTaskTitle'
+    stopTask: [{
+        props: 'title',
+        value: 'stopTaskTitle'
     }],
-    closeTaskDetail:[{
-        props:'title',
-        value:'closeTaskDetailTitle'
+    closeTaskDetail: [{
+        props: 'title',
+        value: 'closeTaskDetailTitle'
+    }],
+    refreshTypeSelect: [{
+        props: 'innerText',
+        value: 'refreshTypeTitle'
+    }],
+    metaLabel: [{
+        props: 'innerText',
+        value: 'metaRefreshType'
+    }],
+    alarmsLabel: [{
+        props: 'innerText',
+        value: 'alarmsRefreshType'
+    }],
+    refreshDesc: [{
+        props: 'innerText',
+        value: 'refreshTypeDesc'
+    }],
+    refreshType: [{
+        props: 'innerText',
+        value: 'refreshTypeTitle'
     }]
 
 }
@@ -56,22 +76,6 @@ const voltaMaskBox = document.getElementById("maskBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
 const defaultImgUrl = chrome.runtime.getURL("icons/icon.png")
 
-// chrome.runtime.sendMessage({ type: 'get', from: 'popup' }, (response) => {
-//     taskList = response?.taskInfoList;
-//     // 执行根据tablist 添加
-//     let addList = Object.values(taskList);
-//     if (addList.length > 0) {
-//         addNewIcoDom(addList)
-//     }
-// });
-
-// chrome.storage.session.get('vlotaTaskList', (result) => {
-//     let addList = Object.values(result.vlotaTaskList);
-//     if (addList.length > 0) {
-//         addNewIcoDom(addList)
-//     }
-// })
-
 const getTaskList = () => {
     return new Promise((resolve, reject) => {
         chrome.storage.session.get('vlotaTaskList', (result) => {
@@ -80,6 +84,13 @@ const getTaskList = () => {
     })
 }
 
+const getCheckedRadio = () => {
+    const radioes = document.getElementsByName('voltacontact');
+    const result = Array.from(radioes).find(r => r.checked)
+    return new Promise((resolve, reject) => {
+        resolve(result?.value || 'meta')
+    })
+}
 const initTask = async () => {
     Object.keys(htmli18nList).forEach(ele => {
         let dom = document.getElementById(`volta${ele}`);
@@ -93,9 +104,6 @@ const initTask = async () => {
 
 }
 initTask();
-// var bg = chrome.extension.getBackgroundPage(); v2版本
-// console.log('taskList', bg)
-// chrome.stroge.session.set({})
 let currentTime = choosedTimeList[0];//刷新的时间间隔
 let finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
 <p class='time-item ${index === 0 ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}s</p>
@@ -110,7 +118,7 @@ const addNewIcoDom = (icoData) => {
     ${acc}
     <img class='ico-item' 
     src="${cur.icon}"
-    id='${cur.id}' 
+    id='${cur.tabId}' 
     title='${cur.title}'
     data-icon='${cur.icon}'
     data-url='${cur.url}' 
@@ -118,6 +126,7 @@ const addNewIcoDom = (icoData) => {
     data-count='${cur.count}' 
     data-time='${cur.time}' 
     data-nexttime='${cur.nexttime}'
+    data-refreshType='${cur.refreshType}'
     data-title='${cur.title}'
     width='32px'
     height='32px'
@@ -129,85 +138,54 @@ const addNewIcoDom = (icoData) => {
 }
 const updateIcoDomInfo = (id, taskInfo) => {
     const voltaIcoDom = document.getElementById(id);
-    ['count', 'time', 'nexttime'].forEach(ele => {
+    ['count', 'time', 'nexttime', 'refreshType'].forEach(ele => {
         voltaIcoDom.setAttribute(`data-${ele}`, taskInfo[ele])
     })
 }
 if (startTaskDom) {
-    startTaskDom.onclick = () => {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            console.log('tabs', tabs[0])
-            //向conent-script 通信
-            // chrome.windows.get(tabs[0].windowId, (res) => {
-            //     console.log('res======>', res)
-            // })
-            chrome.tabs.sendMessage(
-                tabs[0].id,
-                {
-                    type: 'start',
-                    tabId: tabs[0].id,
-                    time: currentTime
-                },
-                async (response) => {
-                    console.log('response popup', response)
-                    //向background 通信 更新 taskList的值
-                    const addData = {
-                        id: tabs[0].id,
-                        icon: tabs[0]?.favIconUrl || defaultImgUrl,
-                        url: tabs[0].url,
-                        winId: tabs[0].windowId,
-                        title: tabs[0].title,
-                        time: currentTime,
-                        count: 1,
-                        nexttime: response?.nextTime
-                    }
-                    let taskList = await getTaskList();
-                    if (taskList.hasOwnProperty(tabs[0].id)) {
-                        updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
-                    } else {
-                        addNewIcoDom([addData]);
-                    }
-                    chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
-
-                    // chrome.storage.session.set({ vlotaTaskList: '2323' })
-
-                    // chrome.runtime.sendMessage({ from: 'popup', type: 'add', addData }, (response) => {
-                    //     if (taskList.hasOwnProperty(tabs[0].id)) {
-                    //         updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
-                    //     } else {
-                    //         addNewIcoDom([addData]);
-                    //     }
-                    //     taskList = response?.taskInfoList;
-                    // })
-
-                    // taskList[tabs[0].id].nexttime = response?.nextTime;
-                    // addNewIcoDom([addData])
-                }
-            );
-        });
+    startTaskDom.onclick = async () => {
+        let refreshType = await getCheckedRadio();
+        console.log(`refreshType`, refreshType)
+        let tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+        const taskListInfo = await getTaskList();
+        const type = taskListInfo.hasOwnProperty(tabs[0].id) ? 'update' : 'start';
+        let isRefreshChange = false;
+        if (type === 'update') {
+            isRefreshChange = taskListInfo[tabs[0].id].refreshType !== refreshType;
+            if (isRefreshChange && refreshType === 'meta') {
+                await chrome.alarms.clear(`${tabs[0].id || 'volta-id'}`);
+            }
+        }
+        if (refreshType === 'alarms') {
+            let minutes = +currentTime / 60
+            await chrome.alarms.create(`${tabs[0].id || 'volta-id'}`, {
+                periodInMinutes: +minutes.toFixed(2)
+            });
+        }
+        chrome.tabs.sendMessage(tabs[0].id, { from: 'popup', type, tabId: tabs[0].id, time: currentTime, refreshType, isRefreshChange }).then(async (response) => {
+            const addData = {
+                tabId: tabs[0].id,
+                refreshType,
+                icon: tabs[0]?.favIconUrl || defaultImgUrl,
+                url: tabs[0].url,
+                winId: tabs[0].windowId,
+                time: currentTime,
+                count: 0,
+                nexttime: response?.nextTime,
+                title: tabs[0].title
+            }
+            let taskList = await getTaskList();//这边重新获取一遍 是为了拿到保证拿到最新的值
+            if (type === 'update') {
+                updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
+            } else {
+                addNewIcoDom([addData]);
+            }
+            await chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
+        })
     }
 } else {
     console.log('startTaskDom未找到！！')
 }
-// //界首content的内容
-// chrome.runtime.onMessage.addListener(
-//     (request, sender, sendResponse) => {
-//         const { tab } = sender;
-//         if (taskList.hasOwnProperty(tab.id)) {
-//             taskList[tab.id].nexttime = request?.nextTime;
-//             taskList[tab.id].count = (+taskList[tab.id].count) + 1;
-//             updateIcoDomInfo(tab.id, taskList[tab.id]);
-//             sendResponse({
-//                 message: 'ok'
-//             })
-//         } else {
-//             sendResponse({
-//                 message: `TaskList Has Not Own Property ${tab.id}`
-//             })
-//         }
-
-//     });
-
 const removeItemActive = () => {
     const activeItem = document.getElementsByClassName('volta-active');
     if (activeItem.length > 0) {
@@ -221,43 +199,52 @@ timeBoxDom.onclick = (e) => {
         e.target.classList.add('volta-active');
     }
 }
-//打开任务详情
+//open detail
 icoBox.onclick = async (e) => {
     let taskList = await getTaskList();
     const taskInfoData = taskList[e.target.id];
-    document.getElementById('iconVolta').src = taskInfoData.icon;
-    ['url', 'time', 'count', 'nexttime', 'title', 'id'].forEach(f => {
-        document.getElementById(`${f}Volta`).innerHTML = taskInfoData[f];
-        if (f === 'title') {
-            document.getElementById(`${f}Volta`).title = taskInfoData[f]
+    document.getElementById('iconVolta').src = taskInfoData?.icon || defaultImgUrl;
+    ['url', 'time', 'count', 'nexttime', 'title', 'tabId', 'refreshType'].forEach(f => {
+        if (f === 'refreshType') {
+            document.getElementById(`${f}Volta`).innerHTML = chrome.i18n.getMessage(`${taskInfoData[f]}${f}`)
+        } else {
+            document.getElementById(`${f}Volta`).innerHTML = taskInfoData[f];
+            if (f === 'title') {
+                document.getElementById(`${f}Volta`).title = taskInfoData[f]
+            }
         }
     })
     document.getElementById('voltastopTask').setAttribute('data-id', e.target.id)
     voltaMaskBox.classList.remove('mask-box-out');
     voltaMaskBox.classList.add('mask-box-in');
 }
-
+// close detail
 document.getElementById('voltacloseTaskDetail').onclick = (e) => {
     voltaMaskBox.classList.remove('mask-box-in');
     voltaMaskBox.classList.add('mask-box-out');
 }
-//停止任务
+//stop Task
 document.getElementById('voltastopTask').onclick = async (e) => {
     const id = document.getElementById('voltastopTask').getAttribute('data-id');
-    let taskList = await getTaskList();
     chrome.tabs.sendMessage(
         +id,
         {
+            from: 'popup',
             type: 'stop',
         },
         async (response) => {
+            let taskList = await getTaskList();
             if (taskList.hasOwnProperty(id)) {
+                if (taskList[id].refreshType === 'alarms') {
+                    await chrome.alarms.clear(`${id}`);
+                }
                 voltaMaskBox.classList.remove('mask-box-in');
                 voltaMaskBox.classList.add('mask-box-out');
                 delete taskList[id];
                 document.getElementById(id).remove();
                 chrome.storage.session.set({ vlotaTaskList: { ...taskList } })
             } else {
+                //todo 停止任务失败描述 加入多语言处理的功能
                 alert('停止任务失败！')
             }
         }

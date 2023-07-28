@@ -1,5 +1,5 @@
 {
-    "author":"24min",
+    "author": "24min",
     "name": "__MSG_name__",
     "version": "0.0.0.1",
     "manifest_version": 3,
@@ -27,6 +27,7 @@
             ],
             "run_at": "document_idle",
             "js": [
+                "utils/tools.js",
                 "content/refreshConfigPage.js"
             ]
         }
@@ -44,6 +45,7 @@
     "permissions": [
         "storage",
         "activeTab",
-        "tabs"
+        "tabs",
+        "alarms"
     ]
 }
