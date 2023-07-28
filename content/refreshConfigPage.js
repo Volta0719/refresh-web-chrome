@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-28 15:19:26
+ * @LastEditTime: 2023-07-28 15:21:57
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -157,9 +157,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-// chrome.runtime.sendMessage(
-//     { greeting: "hello，我是content-script，主动发消息给后台！" },
-//     function (response) {
-//       console.log("收到来自后台的回复：" + response);
-//     }
-//   );

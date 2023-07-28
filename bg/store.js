@@ -1,5 +1,4 @@
 // importScripts("../utils/tools.js")
-console.log('chrome bg', chrome)
 const getTaskList = () => {
     return new Promise((resolve, reject) => {
         chrome.storage.session.get('vlotaTaskList', (result) => {
@@ -7,6 +6,7 @@ const getTaskList = () => {
         })
     })
 }
+chrome.power.requestKeepAwake('system');
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     if (request?.from === 'content') {
         //保留  然后通过存到session

@@ -1,12 +1,11 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-28 14:59:31
+ * @LastEditTime: 2023-07-28 15:36:44
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
  */
-console.log('chrome popup', chrome)
 const htmli18nList = {
     name: [{
         props: 'innerText',

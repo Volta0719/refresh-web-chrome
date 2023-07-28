@@ -46,6 +46,7 @@
         "storage",
         "activeTab",
         "tabs",
-        "alarms"
+        "alarms",
+        "power"
     ]
 }
