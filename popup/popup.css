@@ -1,0 +1,255 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.volta-flex {
+    display: flex;
+}
+
+.flex1 {
+    flex: 1;
+}
+
+.volta-popup-box {
+    width: 400px;
+    padding: 10px;
+    position: relative;
+    /* min-height:235px; */
+}
+
+.page-title {
+    height: 40px;
+    line-height: 40px;
+    font-weight: bolder;
+    font-size: 22px;
+    text-align: center;
+}
+
+.top-header {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-btn {
+    border: 1px solid white;
+    background: #1a92ee;
+    text-transform: uppercase;
+    color: white;
+    padding: 1px 20px;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    height: 30px;
+    width: 80px;
+
+}
+
+.add-btn:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -36px;
+    left: -100px;
+    background: rgb(200, 199, 194);
+    width: 30px;
+    height: 75px;
+    opacity: 20%;
+    transform: rotate(-45deg);
+}
+
+.add-btn:hover:after {
+    left: 120%;
+    transition: all .9s cubic-bezier(0.3, 1, 0.2, 1);
+    -webkit-transition: all .9s cubic-bezier(0.3, 1, 0.2, 1);
+}
+
+.time-box {
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.time-item {
+    font-size: 14px;
+    width: 25%;
+    text-align: center;
+    border: 1px solid #c8c7c7;
+    cursor: pointer;
+    margin: 5px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 5px;
+}
+
+.time-item-input {
+    font-size: 14px;
+    width: 25%;
+    text-align: center;
+    border: 1px solid #c8c7c7;
+    /* cursor: pointer; */
+    margin: 5px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 5px;
+}
+
+.volta-active {
+    background: #0b9aed;
+    color: white;
+}
+
+.ico-box {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.ico-item {
+    margin: 4px;
+    cursor: pointer;
+}
+
+.ico-item:hover,
+#iconVolta:hover {
+    transform: rotate(666turn);
+    transition-delay: 1s;
+    transition-property: all;
+    transition-duration: 59s;
+    transition-timing-function: cubic-bezier(.34, 0, .84, 1);
+}
+
+.mask-box {
+    position: absolute;
+    /* display: none; */
+    pointer-events: none;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background-color: rgba(137, 128, 133, 0.35);
+    /* padding: 20px; */
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* background-color: ; */
+}
+
+.btn-icon {
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.detail-header {
+    padding: 10px;
+    justify-content: space-between;
+}
+
+#titleVolta {
+    margin-left: 10px;
+    font-size: 14px;
+    line-height: 40px;
+    white-space: nowrap;
+    width: 298px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-item {
+    border-top: 1px solid rgb(68, 219, 224);
+    padding: 8px;
+    font-size: 14px;
+}
+
+.detai-title {
+    font-weight: bolder;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.volta-refresh-box {
+    margin: 10px 0;
+}
+
+#voltarefreshDesc {
+    /* text-indent: 2em; */
+    margin-top: 3px;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #e6f4ff;
+    border: 1px solid #91caff;
+    /* font-family: cursive; */
+
+}
+
+
+.radio-box:first-of-type {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+.radio-label {
+    margin-right: 15px;
+    line-height: 32px;
+}
+
+.radio-item {
+    appearance: none;
+
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid #999;
+    transition: 0.2s all linear;
+    margin-right: 5px;
+
+    position: relative;
+    top: 4px;
+}
+
+.radio-item:checked {
+    border: 6px solid black;
+}
+
+
+.mask-box-in {
+    /* display: block; */
+    pointer-events: auto;
+    opacity: 1;
+    z-index: 5;
+    animation: clipCircleIn .4s;
+}
+
+.mask-box-out {
+    animation: clipCircleOut .4s;
+}
+
+@keyframes clipCircleIn {
+    0% {
+        opacity: 0;
+        clip-path: inset(80%);
+    }
+
+    100% {
+        opacity: 1;
+        clip-path: inset(0%);
+    }
+}
+
+@keyframes clipCircleOut {
+    0% {
+        opacity: 1;
+        clip-path: inset(0%);
+
+    }
+
+    100% {
+        opacity: 0;
+        clip-path: inset(80%);
+    }
+}
