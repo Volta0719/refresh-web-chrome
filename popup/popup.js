@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-28 09:35:16
+ * @LastEditTime: 2023-07-28 11:35:16
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -118,7 +118,7 @@ const addNewIcoDom = (icoData) => {
     ${acc}
     <img class='ico-item' 
     src="${cur.icon}"
-    id='${cur.id}' 
+    id='${cur.tabId}' 
     title='${cur.title}'
     data-icon='${cur.icon}'
     data-url='${cur.url}' 
@@ -144,83 +144,47 @@ const updateIcoDomInfo = (id, taskInfo) => {
 }
 if (startTaskDom) {
     startTaskDom.onclick = async () => {
-        /*
-          * 先获取刷新方式 如果是默认刷新还是走原来的通道 基本不需要改变  
-          * 如果是长久刷新的方式，那么需要跟background.js通信 告知需要创建一个alarms的任务（名称就是tabid），并且要把时间转换为分钟。并且要通知content页面（bg页面通知吧） 创建标识 刷新后也可以让bg页面通知
-          * 此外长久刷新的时候 也要江电源模式改掉 使其不进入此休眠模式
-          */
         let refreshType = await getCheckedRadio();
         let tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-        if (refreshType === 'meta') {
-            //默认刷新的方式
-            chrome.tabs.sendMessage(tabs[0].id, { from: 'popup', type: 'start', tabId: tabs[0].id, time: currentTime, refreshType }).then(async (response) => {
-                const addData = {
-                    id: tabs[0].id,
-                    refreshType,
-                    icon: tabs[0]?.favIconUrl || defaultImgUrl,
-                    url: tabs[0].url,
-                    winId: tabs[0].windowId,
-                    title: tabs[0].title,
-                    time: currentTime,
-                    count: 0,
-                    nexttime: response?.nextTime
-                }
-                let taskList = await getTaskList();
-                if (taskList.hasOwnProperty(tabs[0].id)) {
-                    //判断是否已经存在的额  放在这里不好 稍后进行更改 应该放在sendmessage之前
-                    updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
-                } else {
-                    addNewIcoDom([addData]);
-                }
-                chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
-            })
-        } else {
-            //发给bg的
-            chrome.runtime.sendMessage({ from: 'popup', type: 'start', tabId: tabs[0].id, time: currentTime, refreshType }).then(async (response) => {
-                // if(response?)
-                const addData = {
-                    id: tabs[0].id,
-                    refreshType,
-                    icon: tabs[0]?.favIconUrl || defaultImgUrl,
-                    url: tabs[0].url,
-                    winId: tabs[0].windowId,
-                    title: tabs[0].title,
-                    time: currentTime,
-                    count: 0,
-                    nexttime: response?.nextTime
-                }
-                let taskList = await getTaskList();
-                if (taskList.hasOwnProperty(tabs[0].id)) {
-                    updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
-                } else {
-                    addNewIcoDom([addData]);
-                }
-                chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
-            })
+        const taskListInfo = await getTaskList();
+        const type = taskListInfo.hasOwnProperty(tabs[0].id) ? 'update' : 'start';
+        // const sss
+        let isRefreshChange;
+        if (type === 'update') {
+            isRefreshChange = taskListInfo[tabs[0].id].refreshType !== refreshType
         }
+        if (refreshType === 'alarms') {
+            let minutes = +currentTime / 60
+            await chrome.alarms.create(`${tabs[0].id || 'volta-id'}`, {
+                periodInMinutes: +minutes.toFixed(2)
+            });
+        } else {
+            //如果change了 那么需要取消掉 alarms的闹钟
+            
+        }
+        chrome.tabs.sendMessage(tabs[0].id, { from: 'popup', type, tabId: tabs[0].id, time: currentTime, refreshType, isRefreshChange }).then(async (response) => {
+            const addData = {
+                tabId: tabs[0].id,
+                refreshType,
+                icon: tabs[0]?.favIconUrl || defaultImgUrl,
+                url: tabs[0].url,
+                winId: tabs[0].windowId,
+                time: currentTime,
+                count: 0,
+                nexttime: response?.nextTime
+            }
+            let taskList = await getTaskList();//这边重新获取一遍 是为了拿到最新的值
+            if (type === 'update') {
+                updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
+            } else {
+                addNewIcoDom([addData]);
+            }
+           await chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
+        })
     }
 } else {
     console.log('startTaskDom未找到！！')
 }
-// //界首content的内容
-// chrome.runtime.onMessage.addListener(
-//     (request, sender, sendResponse) => {
-//         const { tab } = sender;
-//         if (taskList.hasOwnProperty(tab.id)) {
-//             taskList[tab.id].nexttime = request?.nextTime;
-//             taskList[tab.id].count = (+taskList[tab.id].count) + 1;
-//             updateIcoDomInfo(tab.id, taskList[tab.id]);
-//             sendResponse({
-//                 message: 'ok'
-//             })
-//         } else {
-//             sendResponse({
-//                 message: `TaskList Has Not Own Property ${tab.id}`
-//             })
-//         }
-
-//     });
-
 const removeItemActive = () => {
     const activeItem = document.getElementsByClassName('volta-active');
     if (activeItem.length > 0) {
@@ -239,7 +203,7 @@ icoBox.onclick = async (e) => {
     let taskList = await getTaskList();
     const taskInfoData = taskList[e.target.id];
     document.getElementById('iconVolta').src = taskInfoData.icon;
-    ['url', 'time', 'count', 'nexttime', 'title', 'id', 'refreshType'].forEach(f => {
+    ['url', 'time', 'count', 'nexttime', 'title', 'tabId', 'refreshType'].forEach(f => {
         if (f === 'refreshType') {
             document.getElementById(`${f}Volta`).innerHTML = chrome.i18n.getMessage(`${taskInfoData[f]}${f}`)
         } else {

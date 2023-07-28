@@ -31,25 +31,6 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                 message: `[${request?.type}]TaskList Has Not Own Property ${tab.id}`
             })
         }
-    } else if (request?.from === 'popup') {
-        const taskInfoList = await getTaskList();//这边应该是 获取所有的alarms 判断alarm是否已经存在
-        if (taskInfoList.hasOwnProperty(request?.tabId)) {
-
-        } else {
-            let minutes = +request?.time / 60
-            await chrome.alarms.create(`${request?.tabId || 'volta-id'}`, {
-                periodInMinutes: +minutes.toFixed(2)
-            });
-            //给content 发送消息 让其创建工作标识
-            chrome.tabs.sendMessage(+request?.tabId, { from: 'bg', type: 'start', tabId: request?.tabId, time: request?.time, refreshType: request?.refreshType }).then((res)=>{
-                sendResponse({
-                    from: 'bg',
-                    message: 'ok',
-                    nextTime:res?.nextTime
-                })
-            })
-           
-        }
     }
 }
 );

@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-28 10:09:13
+ * @LastEditTime: 2023-07-28 11:38:49
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -56,6 +56,7 @@ const createVoltaRefreshHtml = (time, nexttime, type = 'meta') => {
                 chrome.runtime.sendMessage(
                     { from: 'content', type: 'stop' },
                     (response) => {
+                        //stop的话 需要区分是那种方式的stop  取消 alarms的方式不一样的
                         sessionStorage.removeItem(vloltaSessionInfoKey);
                         location.reload();
                     }
@@ -98,11 +99,10 @@ if (!!voltaSessionInfo) {
             ...voltaSessionInfoObject, nextTime: nextVoltaRerfeshTime
         }))
     }
-    chrome.runtime.sendMessage({ from: 'content', nextTime: nextVoltaRerfeshTime, type: 'update' }).then((response)=>{
-        
+    chrome.runtime.sendMessage({ from: 'content', nextTime: nextVoltaRerfeshTime, type: 'update' }).then((response) => {
+
     });
 }
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     //request.refreshType
     const voltaSession =
@@ -115,21 +115,39 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request?.from === 'popup') {
         if (request?.type === 'start') {
             //启动
-            sessionStorage.setItem(vloltaSessionInfoKey, JSON.stringify(voltaSession));//将时间修改
-            createVoltaRefresh(request?.time);
+            sessionStorage.setItem(vloltaSessionInfoKey, JSON.stringify(voltaSession));
+            if (request?.refreshType === 'meta') {
+                createVoltaRefresh(request?.time);
+            }
             createVoltaRefreshHtml(request?.time, voltaSession?.nextTime)
             sendResponse({
                 from: 'content',
                 type: 'add',
-                nextTime: nextVoltaRerfeshTime
+                nextTime: voltaSession?.nextTime
             })
+        } else if (request?.type === 'update') {
+            sessionStorage.setItem(vloltaSessionInfoKey, JSON.stringify(voltaSession));
+            if (request?.isRefreshChange) {
+                if (request?.refreshType === 'alarms') {
+                    //这个代表刷新方式已经改成 alarms  所以要删掉 meta标签
+                    location.reload();
+                } else {
+                    createVoltaRefresh(request?.time);
+                }
+            }
+            createVoltaRefreshHtml(request?.time, voltaSession?.nextTime);
+            sendResponse({
+                from: 'content',
+                type: 'update',
+                nextTime: voltaSession?.nextTime
+            })
+
         } else if (request?.type === 'stop') {
             //停止
             sessionStorage.removeItem(vloltaSessionInfoKey);
             // document.querySelector(`meta[name="${vloltaSessionInfoKey}"]`).remove();
             sendResponse({ message: "ok" });
             location.reload();
-
         }
     } else {
         //from bg alarms refresh type vloltaSessionInfoKey
