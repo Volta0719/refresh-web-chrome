@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-28 11:38:49
+ * @LastEditTime: 2023-07-28 14:16:48
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -145,8 +145,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         } else if (request?.type === 'stop') {
             //停止
             sessionStorage.removeItem(vloltaSessionInfoKey);
-            // document.querySelector(`meta[name="${vloltaSessionInfoKey}"]`).remove();
-            sendResponse({ message: "ok" });
+            sendResponse({ from:'content',message: "ok" });
             location.reload();
         }
     } else {

@@ -17,7 +17,9 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
                 taskInfoList[tab.id].nexttime = request?.nextTime;
                 taskInfoList[tab.id].count = (+taskInfoList[tab.id].count) + 1;
             } else if (request?.type === 'stop') {
-                //这个还要考虑不同方式 停止
+                if (taskInfoList[tab.id].refreshType === 'alarms') {
+                    await chrome.alarms.clear(`${tab.id}`);
+                }
                 delete taskInfoList[tab.id]
             }
             await chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
@@ -44,18 +46,24 @@ chrome.tabs.onRemoved.addListener(async (tabId, windowData) => {
         //windowData:{isWindowClosing:false,windowId:11222}
         const taskInfoList = await getTaskList()
         if (taskInfoList.hasOwnProperty(tabId)) {
+            if (taskInfoList[tabId].refreshType === 'alarms') {
+                await chrome.alarms.clear(`${tabId}`);
+            }
             delete taskInfoList[tabId]
-            chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
+            await chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
         }
     }
 })
 chrome.windows.onRemoved.addListener(async (winid) => {
     const taskInfoList = await getTaskList()
     const tabsIdList = Object.keys(taskInfoList);
-    tabsIdList.forEach(id => {
+    tabsIdList.forEach(async (id) => {
         if (taskInfoList[id].winId == winid) {
+            if (taskInfoList[id].refreshType === 'alarms') {
+                await chrome.alarms.clear(`${id}`);
+            }
             delete taskInfoList[id]
         }
     })
-    chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
+    await chrome.storage.session.set({ vlotaTaskList: { ...taskInfoList } })
 })

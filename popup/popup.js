@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-28 11:35:16
+ * @LastEditTime: 2023-07-28 14:59:31
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -145,22 +145,22 @@ const updateIcoDomInfo = (id, taskInfo) => {
 if (startTaskDom) {
     startTaskDom.onclick = async () => {
         let refreshType = await getCheckedRadio();
+        console.log(`refreshType`, refreshType)
         let tabs = await chrome.tabs.query({ active: true, currentWindow: true });
         const taskListInfo = await getTaskList();
         const type = taskListInfo.hasOwnProperty(tabs[0].id) ? 'update' : 'start';
-        // const sss
-        let isRefreshChange;
+        let isRefreshChange = false;
         if (type === 'update') {
-            isRefreshChange = taskListInfo[tabs[0].id].refreshType !== refreshType
+            isRefreshChange = taskListInfo[tabs[0].id].refreshType !== refreshType;
+            if (isRefreshChange && refreshType === 'meta') {
+                await chrome.alarms.clear(`${tabs[0].id || 'volta-id'}`);
+            }
         }
         if (refreshType === 'alarms') {
             let minutes = +currentTime / 60
             await chrome.alarms.create(`${tabs[0].id || 'volta-id'}`, {
                 periodInMinutes: +minutes.toFixed(2)
             });
-        } else {
-            //如果change了 那么需要取消掉 alarms的闹钟
-            
         }
         chrome.tabs.sendMessage(tabs[0].id, { from: 'popup', type, tabId: tabs[0].id, time: currentTime, refreshType, isRefreshChange }).then(async (response) => {
             const addData = {
@@ -171,15 +171,16 @@ if (startTaskDom) {
                 winId: tabs[0].windowId,
                 time: currentTime,
                 count: 0,
-                nexttime: response?.nextTime
+                nexttime: response?.nextTime,
+                title: tabs[0].title
             }
-            let taskList = await getTaskList();//这边重新获取一遍 是为了拿到最新的值
+            let taskList = await getTaskList();//这边重新获取一遍 是为了拿到保证拿到最新的值
             if (type === 'update') {
                 updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
             } else {
                 addNewIcoDom([addData]);
             }
-           await chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
+            await chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
         })
     }
 } else {
@@ -198,11 +199,11 @@ timeBoxDom.onclick = (e) => {
         e.target.classList.add('volta-active');
     }
 }
-//打开任务详情
+//open detail
 icoBox.onclick = async (e) => {
     let taskList = await getTaskList();
     const taskInfoData = taskList[e.target.id];
-    document.getElementById('iconVolta').src = taskInfoData.icon;
+    document.getElementById('iconVolta').src = taskInfoData?.icon || defaultImgUrl;
     ['url', 'time', 'count', 'nexttime', 'title', 'tabId', 'refreshType'].forEach(f => {
         if (f === 'refreshType') {
             document.getElementById(`${f}Volta`).innerHTML = chrome.i18n.getMessage(`${taskInfoData[f]}${f}`)
@@ -217,28 +218,33 @@ icoBox.onclick = async (e) => {
     voltaMaskBox.classList.remove('mask-box-out');
     voltaMaskBox.classList.add('mask-box-in');
 }
-
+// close detail
 document.getElementById('voltacloseTaskDetail').onclick = (e) => {
     voltaMaskBox.classList.remove('mask-box-in');
     voltaMaskBox.classList.add('mask-box-out');
 }
-//停止任务
+//stop Task
 document.getElementById('voltastopTask').onclick = async (e) => {
     const id = document.getElementById('voltastopTask').getAttribute('data-id');
-    let taskList = await getTaskList();
     chrome.tabs.sendMessage(
         +id,
         {
+            from: 'popup',
             type: 'stop',
         },
         async (response) => {
+            let taskList = await getTaskList();
             if (taskList.hasOwnProperty(id)) {
+                if (taskList[id].refreshType === 'alarms') {
+                    await chrome.alarms.clear(`${id}`);
+                }
                 voltaMaskBox.classList.remove('mask-box-in');
                 voltaMaskBox.classList.add('mask-box-out');
                 delete taskList[id];
                 document.getElementById(id).remove();
                 chrome.storage.session.set({ vlotaTaskList: { ...taskList } })
             } else {
+                //todo 停止任务失败描述 加入多语言处理的功能
                 alert('停止任务失败！')
             }
         }
