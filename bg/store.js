@@ -1,5 +1,5 @@
 // importScripts("../utils/tools.js")
-console.log('chrome bg',chrome)
+console.log('chrome bg', chrome)
 const getTaskList = () => {
     return new Promise((resolve, reject) => {
         chrome.storage.session.get('vlotaTaskList', (result) => {

@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-28 16:40:04
+ * @LastEditTime: 2023-07-28 16:55:36
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -209,7 +209,6 @@ if (startTaskDom) {
     startTaskDom.onclick = async () => {
         let refreshType = await getCheckedRadio();
         console.log(`refreshType`, refreshType)
-
         const taskListInfo = await getTaskList();
         const type = taskListInfo.hasOwnProperty(tabs[0].id) ? 'update' : 'start';
         let isRefreshChange = false;
