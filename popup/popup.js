@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-27 17:29:40
+ * @LastEditTime: 2023-07-28 09:35:16
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -153,7 +153,7 @@ if (startTaskDom) {
         let tabs = await chrome.tabs.query({ active: true, currentWindow: true });
         if (refreshType === 'meta') {
             //默认刷新的方式
-            chrome.tabs.sendMessage(tabs[0].id, { from: 'popup', type: 'start', tabId: tabs[0].id, time: currentTime }).then(async (response) => {
+            chrome.tabs.sendMessage(tabs[0].id, { from: 'popup', type: 'start', tabId: tabs[0].id, time: currentTime, refreshType }).then(async (response) => {
                 const addData = {
                     id: tabs[0].id,
                     refreshType,
@@ -167,6 +167,7 @@ if (startTaskDom) {
                 }
                 let taskList = await getTaskList();
                 if (taskList.hasOwnProperty(tabs[0].id)) {
+                    //判断是否已经存在的额  放在这里不好 稍后进行更改 应该放在sendmessage之前
                     updateIcoDomInfo(tabs[0].id, taskList[tabs[0].id])
                 } else {
                     addNewIcoDom([addData]);
@@ -174,8 +175,8 @@ if (startTaskDom) {
                 chrome.storage.session.set({ vlotaTaskList: { ...taskList, [tabs[0].id]: addData } })
             })
         } else {
-            //长久刷新的方式
-            chrome.runtime.sendMessage({ from: 'popup', type: 'start', tabId: tabs[0].id, time: currentTime }).then(async (response) => {
+            //发给bg的
+            chrome.runtime.sendMessage({ from: 'popup', type: 'start', tabId: tabs[0].id, time: currentTime, refreshType }).then(async (response) => {
                 // if(response?)
                 const addData = {
                     id: tabs[0].id,

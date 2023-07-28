@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-27 15:25:45
+ * @LastEditTime: 2023-07-28 10:09:13
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -9,12 +9,12 @@
 console.log('chrome', chrome)
 // chrome.alarms.create({delayInMinutes: 3.0})
 const id = chrome?.runtime?.id || ''
-const vloltaSessionTimeKey = `voltaTime_${id}`
-const voltaMeta = document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`)
-const voltaSessionTime = sessionStorage.getItem(vloltaSessionTimeKey)
+const vloltaSessionInfoKey = `voltaInfo_${id}`
+const voltaMeta = document.querySelector(`meta[name="${vloltaSessionInfoKey}"]`)
+const voltaSessionInfo = sessionStorage.getItem(vloltaSessionInfoKey)
 
 //在页面中创建一个指示定时刷新的状态指示器
-const createVoltaRefreshHtml = (time, nexttime) => {
+const createVoltaRefreshHtml = (time, nexttime, type = 'meta') => {
     if (!!document.getElementById('voltaIcon')) {
         document.getElementById('voltaIcon').title = `${chrome.i18n.getMessage("nextHappen")}:${nexttime}`;
     } else {
@@ -56,7 +56,7 @@ const createVoltaRefreshHtml = (time, nexttime) => {
                 chrome.runtime.sendMessage(
                     { from: 'content', type: 'stop' },
                     (response) => {
-                        sessionStorage.removeItem(vloltaSessionTimeKey);
+                        sessionStorage.removeItem(vloltaSessionInfoKey);
                         location.reload();
                     }
                 );
@@ -69,10 +69,10 @@ const createVoltaRefreshHtml = (time, nexttime) => {
         }
     }
 }
-const createVoltaRefresh = (time = '60', name = vloltaSessionTimeKey) => {
-    if (!!document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`)) {
+const createVoltaRefresh = (time = '60', name = vloltaSessionInfoKey) => {
+    if (!!document.querySelector(`meta[name="${vloltaSessionInfoKey}"]`)) {
         console.log(`${chrome.i18n.getMessage("contentAlreadylog")}${time}s`)
-        document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`).content = time;
+        document.querySelector(`meta[name="${vloltaSessionInfoKey}"]`).content = time;
     } else {
         const voltaCreateMeta = document.createElement('meta');
         voltaCreateMeta.name = name;
@@ -81,39 +81,66 @@ const createVoltaRefresh = (time = '60', name = vloltaSessionTimeKey) => {
         document.getElementsByTagName('head')[0].appendChild(voltaCreateMeta);
     }
 }
-if (!!voltaSessionTime && !voltaMeta) {
+if (!!voltaSessionInfo) {
     // const voltaStartTime = new Date();//获取时间
-    createVoltaRefresh(voltaSessionTime);
-    const nextVoltaRerfeshTime = recordNextHappenTime(voltaSessionTime);
-    createVoltaRefreshHtml(voltaSessionTime, nextVoltaRerfeshTime)
-    //这个应该要做修改 要与service_work通信
-    chrome.runtime.sendMessage(
-        { from: 'content', nextTime: nextVoltaRerfeshTime, type: 'update' },
-        function (response) {
-            console.log("收到来自后台的回复：" + response?.message);
-        }
-    );
+    const voltaSessionInfoObject = JSON.parse(voltaSessionInfo);
+    const nextVoltaRerfeshTime = recordNextHappenTime(voltaSessionInfoObject.time);
+    if (voltaSessionInfoObject.refreshType === 'meta') {
+        createVoltaRefresh(voltaSessionInfoObject.time);
+        createVoltaRefreshHtml(voltaSessionInfoObject.time, nextVoltaRerfeshTime, voltaSessionInfoObject.refreshType);
+        sessionStorage.setItem(vloltaSessionInfoKey, JSON.stringify({
+            ...voltaSessionInfoObject, nextTime: nextVoltaRerfeshTime
+        }))
+        //这个应该要做修改 要与service_work通信
+    } else {
+        createVoltaRefreshHtml(voltaSessionInfoObject.time, nextVoltaRerfeshTime, voltaSessionInfoObject.refreshType);
+        sessionStorage.setItem(vloltaSessionInfoKey, JSON.stringify({
+            ...voltaSessionInfoObject, nextTime: nextVoltaRerfeshTime
+        }))
+    }
+    chrome.runtime.sendMessage({ from: 'content', nextTime: nextVoltaRerfeshTime, type: 'update' }).then((response)=>{
+        
+    });
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request?.type === 'start') {
-        //启动
-        sessionStorage.setItem(vloltaSessionTimeKey, request?.time || '60');//将时间修改
-        createVoltaRefresh(request?.time);
-        const nextVoltaRerfeshTime = recordNextHappenTime(request?.time);
-        createVoltaRefreshHtml(request?.time, nextVoltaRerfeshTime)
+    //request.refreshType
+    const voltaSession =
+    {
+        time: request?.time,
+        nextTime: recordNextHappenTime(request?.time),
+        tabId: request?.tabId,
+        refreshType: request?.refreshType
+    }
+    if (request?.from === 'popup') {
+        if (request?.type === 'start') {
+            //启动
+            sessionStorage.setItem(vloltaSessionInfoKey, JSON.stringify(voltaSession));//将时间修改
+            createVoltaRefresh(request?.time);
+            createVoltaRefreshHtml(request?.time, voltaSession?.nextTime)
+            sendResponse({
+                from: 'content',
+                type: 'add',
+                nextTime: nextVoltaRerfeshTime
+            })
+        } else if (request?.type === 'stop') {
+            //停止
+            sessionStorage.removeItem(vloltaSessionInfoKey);
+            // document.querySelector(`meta[name="${vloltaSessionInfoKey}"]`).remove();
+            sendResponse({ message: "ok" });
+            location.reload();
+
+        }
+    } else {
+        //from bg alarms refresh type vloltaSessionInfoKey
+        sessionStorage.setItem(vloltaSessionInfoKey, JSON.stringify(voltaSession))
+        createVoltaRefreshHtml(voltaSession?.time, voltaSession?.nextTime, voltaSession?.refreshType);
         sendResponse({
             from: 'content',
-            type:'add',
-            nextTime: nextVoltaRerfeshTime
+            type: 'add',
+            message: 'ok',
+            nextTime: voltaSession?.nextTime
         })
-    } else if (request?.type === 'stop') {
-        //停止
-        sessionStorage.removeItem(vloltaSessionTimeKey);
-        // document.querySelector(`meta[name="${vloltaSessionTimeKey}"]`).remove();
-        sendResponse({ message: "ok" });
-        location.reload();
-
     }
 });
 
