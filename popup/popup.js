@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-28 15:36:44
+ * @LastEditTime: 2023-07-28 16:40:04
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -74,6 +74,8 @@ const icoBoxDom = document.getElementById("icoBox");
 const voltaMaskBox = document.getElementById("maskBox");
 const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'];
 const defaultImgUrl = chrome.runtime.getURL("icons/icon.png")
+let tabs;
+let currentTime;//刷新的时间间隔
 
 const getTaskList = () => {
     return new Promise((resolve, reject) => {
@@ -90,28 +92,90 @@ const getCheckedRadio = () => {
         resolve(result?.value || 'meta')
     })
 }
-const initTask = async () => {
-    Object.keys(htmli18nList).forEach(ele => {
-        let dom = document.getElementById(`volta${ele}`);
-        htmli18nList[ele].forEach(f => dom[f.props] = chrome.i18n.getMessage(f.value))
+const createTimeSeletcDom = (time = choosedTimeList[0]) => {
+    currentTime = time;
+    //还有输入框的值
+    let finalTimeItem;
+    console.log('time', time)
+    if (choosedTimeList.includes(time)) {
+        finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
+        <p class='time-item ${cur == time ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}s</p>
+        `, '')
+        timeBoxDom.innerHTML = `${finalTimeItem}
+        <p class='time-item-input' contenteditable='true' id="timeInput"></p>
+ `;
+    } else {
+        finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
+        <p class='time-item' data-index='${index}' data-time='${cur}'>${cur}s</p>
+        `, '')
+        timeBoxDom.innerHTML = `${finalTimeItem}
+        <p class='time-item-input' contenteditable='true' id="timeInput"></p>
+ `;
+        document.getElementById('timeInput').innerText = time;
+    }
+    finalTimeItem = null;
+    //输入框
+    document.getElementById('timeInput').oninput = (e) => {
+        removeItemActive();
+        currentTime = +e.target.innerHTML;
+        e.target.innerHTML = e.target.innerHTML.replace(/[\D]/g, '');
+        if (window.getSelection) {
+            e.target.focus();
+            let range = window.getSelection();
+            range.selectAllChildren(e.target);
+            range.collapseToEnd();
+        }
+        else if (document.selection) {
+            let range = document.selection.createRange();
+            range.moveToElementText(e.target);
+            range.collapse(false);
+            range.select();
+        }
+    }
+}
+const setRefreshTypeChecked = (refreshType = 'meta') => {
+    const radioes = document.getElementsByName('voltacontact');
+    Array.from(radioes).forEach(ele => {
+        console.log('ele', ele.value)
+        ele.checked = ele.value === refreshType
     })
+}
+
+const initTask = async () => {
+    let finalHtmli18nList = { ...htmli18nList }
     let taskList = await getTaskList();
+    tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     let addList = Object.values(taskList);
     if (addList.length > 0) {
         addNewIcoDom(addList)
+        if (taskList.hasOwnProperty(tabs[0].id)) {
+            //已存在 那么需要 选中默认值
+            finalHtmli18nList.startTask = [
+                {
+                    props: 'innerText',
+                    value: 'updateBtnTask'
+                }, {
+                    props: 'title',
+                    value: 'updateBtnTitle'
+                }
+            ]
+            createTimeSeletcDom(taskList[tabs[0].id].time)
+            setRefreshTypeChecked(taskList[tabs[0].id].refreshType);
+        } else {
+            createTimeSeletcDom();
+            setRefreshTypeChecked();
+        }
+    } else {
+        createTimeSeletcDom();
+        setRefreshTypeChecked();
     }
-
+    Object.keys(finalHtmli18nList).forEach(ele => {
+        let dom = document.getElementById(`volta${ele}`);
+        finalHtmli18nList[ele].forEach(f => dom[f.props] = chrome.i18n.getMessage(f.value))
+    })
 }
 initTask();
-let currentTime = choosedTimeList[0];//刷新的时间间隔
-let finalTimeItem = choosedTimeList.reduce((acc, cur, index, arr) => `${acc}
-<p class='time-item ${index === 0 ? 'volta-active' : ''}' data-index='${index}' data-time='${cur}'>${cur}s</p>
-`, '')
 
-timeBoxDom.innerHTML = `${finalTimeItem}
-<p class='time-item-input' contenteditable='true' id="timeInput"></p>
-`;
-finalTimeItem = null;
 const addNewIcoDom = (icoData) => {
     let finalIcoHtml = icoData.reduce((acc, cur, index, arr) => `
     ${acc}
@@ -145,7 +209,7 @@ if (startTaskDom) {
     startTaskDom.onclick = async () => {
         let refreshType = await getCheckedRadio();
         console.log(`refreshType`, refreshType)
-        let tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+
         const taskListInfo = await getTaskList();
         const type = taskListInfo.hasOwnProperty(tabs[0].id) ? 'update' : 'start';
         let isRefreshChange = false;
@@ -249,22 +313,4 @@ document.getElementById('voltastopTask').onclick = async (e) => {
         }
     );
 
-}
-//输入框
-document.getElementById('timeInput').oninput = (e) => {
-    removeItemActive();
-    currentTime = +e.target.innerHTML;
-    e.target.innerHTML = e.target.innerHTML.replace(/[\D]/g, '');
-    if (window.getSelection) {
-        e.target.focus();
-        let range = window.getSelection();
-        range.selectAllChildren(e.target);
-        range.collapseToEnd();
-    }
-    else if (document.selection) {
-        let range = document.selection.createRange();
-        range.moveToElementText(e.target);
-        range.collapse(false);
-        range.select();
-    }
 }
