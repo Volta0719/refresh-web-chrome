@@ -219,6 +219,7 @@ if (startTaskDom) {
             }
         }
         if (refreshType === 'alarms') {
+            currentTime = +currentTime < 60 ? 60 : +currentTime;
             let minutes = +currentTime / 60
             await chrome.alarms.create(`${tabs[0].id || 'volta-id'}`, {
                 periodInMinutes: +minutes.toFixed(2)
@@ -231,7 +232,7 @@ if (startTaskDom) {
                 icon: tabs[0]?.favIconUrl || defaultImgUrl,
                 url: tabs[0].url,
                 winId: tabs[0].windowId,
-                time: currentTime,
+                time: `${currentTime}`,
                 count: 0,
                 nexttime: response?.nextTime,
                 title: tabs[0].title
@@ -266,7 +267,7 @@ icoBox.onclick = async (e) => {
     let taskList = await getTaskList();
     const taskInfoData = taskList[e.target.id];
     document.getElementById('iconVolta').src = taskInfoData?.icon || defaultImgUrl;
-    ['url', 'time', 'count', 'nexttime', 'title', 'tabId', 'refreshType','winId'].forEach(f => {
+    ['url', 'time', 'count', 'nexttime', 'title', 'tabId', 'refreshType', 'winId'].forEach(f => {
         if (f === 'refreshType') {
             document.getElementById(`${f}Volta`).innerHTML = chrome.i18n.getMessage(`${taskInfoData[f]}${f}`)
         } else {

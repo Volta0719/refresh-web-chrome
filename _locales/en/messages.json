@@ -39,7 +39,7 @@
       "message": "Refresh Mode"
    },
    "refreshTypeDesc": {
-      "message": "If you have enabled the hibernation function of browser tabs, the default refresh will not work after the tab is hibernated. But if you don't have tab hibernation turned on, both refresh methods will work. In addition, when you choose the long-lasting refresh method, we will stop the computer from sleeping."
+      "message": "The browser's tab hibernation function will cause the default refresh mode to work incorrectly, but the Long-lasting refresh mode will still work normally (so it is recommended that temporary refresh can use the default refresh mode or you can also turn off the browser's tab hibernation function). In addition, it should be noted that the minimum refresh interval for Long-lasting refresh mode is 1 minute (less than 1 minute will be reset to 1 minute)"
    },
    "metaRefreshType": {
       "message": "Default Refresh"

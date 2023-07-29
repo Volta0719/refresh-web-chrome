@@ -73,9 +73,9 @@ https://github.com/GoogleChrome/chrome-extensions-samples
 
 1.选择方式的html样式调整一下 done
 
-2.刷新方式的文案调整一下
+2.刷新方式的文案调整一下 done
 
-3，长久刷新的话 最小为1分钟 
+3，长久刷新的话 最小为1分钟  done
 
 4，增加 windowid的显示 done
 
