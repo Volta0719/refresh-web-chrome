@@ -23,6 +23,7 @@ module.exports = {
         }
     },
     output: {
+        clean:true,
         path: path.resolve(__dirname, `./${build}`)
     },
     plugins: [

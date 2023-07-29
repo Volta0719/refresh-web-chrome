@@ -37,6 +37,8 @@ domDiv.getAttribute("data-index")
 
 favIconUrl
 url
+# Alarm period is less than minimum of 1 minutes. In released .crx, alarm "727558402" will fire approximately every 1 minutes.
+使用alarms时候  至少应该大于一分钟
 
 # 转场动画
 
