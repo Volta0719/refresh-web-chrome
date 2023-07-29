@@ -1,12 +1,11 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-28 15:21:57
+ * @LastEditTime: 2023-07-29 20:35:21
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
  */
-console.log('chrome', chrome)
 // chrome.alarms.create({delayInMinutes: 3.0})
 const id = chrome?.runtime?.id || ''
 const vloltaSessionInfoKey = `voltaInfo_${id}`
@@ -20,7 +19,18 @@ const createVoltaRefreshHtml = (time, nexttime, type = 'meta') => {
     } else {
         const style = document.createElement('style')
         style.appendChild(document.createTextNode(`
-        @keyframes vlotarefreshrotate{
+        @keyframes vlotametarefresh{
+            0% { 
+                transform: scale(0.8);
+                }
+                50% { 
+                    transform: scale(1.2);
+                    transform:rotate(-90deg)
+                    }
+            100% {transform: scale(0.8);
+              }
+        }
+        @keyframes vlotaalarmsrefresh{
             0% {transform: rotate(1turn);}
             100% {transform: rotate(0turn);}
         }
@@ -43,7 +53,7 @@ const createVoltaRefreshHtml = (time, nexttime, type = 'meta') => {
                   background-repeat:np-repeat;
                   border-radius:50%;
                   z-index:999;
-                  animation-name:vlotarefreshrotate;
+                  animation-name:vlota${type}refresh;
                   animation-duration: 1s;
                   animation-iteration-count: infinite;
                   animation-timing-function:linear;
