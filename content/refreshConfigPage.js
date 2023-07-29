@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-29 20:35:21
+ * @LastEditTime: 2023-07-29 20:50:35
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -16,19 +16,14 @@ const voltaSessionInfo = sessionStorage.getItem(vloltaSessionInfoKey)
 const createVoltaRefreshHtml = (time, nexttime, type = 'meta') => {
     if (!!document.getElementById('voltaIcon')) {
         document.getElementById('voltaIcon').title = `${chrome.i18n.getMessage("nextHappen")}:${nexttime}`;
+        document.getElementById('voltaIcon').style.animationName = `vlota${type}refresh`;
     } else {
         const style = document.createElement('style')
         style.appendChild(document.createTextNode(`
         @keyframes vlotametarefresh{
-            0% { 
-                transform: scale(0.8);
-                }
-                50% { 
-                    transform: scale(1.2);
-                    transform:rotate(-90deg)
-                    }
-            100% {transform: scale(0.8);
-              }
+            0% { transform: scale(0.8);}
+            50% { transform: scale(1.2);transform:rotate(-90deg)}
+            100% {transform: scale(0.8);}
         }
         @keyframes vlotaalarmsrefresh{
             0% {transform: rotate(1turn);}
@@ -125,7 +120,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             if (request?.refreshType === 'meta') {
                 createVoltaRefresh(request?.time);
             }
-            createVoltaRefreshHtml(request?.time, voltaSession?.nextTime)
+            createVoltaRefreshHtml(request?.time, voltaSession?.nextTime, request?.refreshType)
             sendResponse({
                 from: 'content',
                 type: 'add',
@@ -141,7 +136,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     createVoltaRefresh(request?.time);
                 }
             }
-            createVoltaRefreshHtml(request?.time, voltaSession?.nextTime);
+            createVoltaRefreshHtml(request?.time, voltaSession?.nextTime, request?.refreshType);
             sendResponse({
                 from: 'content',
                 type: 'update',
