@@ -35,8 +35,8 @@
    "contentAlreadylog": {
       "message": "[VoltaRefresh]:更新タスクが既に存在する場合は、更新間隔を次のように調整します"
    },
-   "refreshTypeTitle":{
-      "message":"リフレッシュモード"
+   "refreshTypeTitle": {
+      "message": "リフレッシュモード"
    },
    "refreshTypeDesc": {
       "message": "ブラウザタブの休止状態機能を有効にしている場合、タブが休止状態になった後はデフォルトの更新は機能しません。 ただし、タブの休止状態をオンにしていない場合は、両方の更新方法が機能します。 また、長期リフレッシュ方式を選択すると、コンピューターがスリープ状態から停止します。"
@@ -46,5 +46,11 @@
    },
    "alarmsRefreshType": {
       "message": "長い"
+   },
+   "updateBtnTask": {
+      "message": "改める"
+   },
+   "updateBtnTitle": {
+      "message": "現在のページの更新タスクが既に存在します"
    }
 }

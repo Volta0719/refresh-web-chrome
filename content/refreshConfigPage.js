@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-28 14:16:48
+ * @LastEditTime: 2023-07-28 15:21:57
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -29,43 +29,39 @@ const createVoltaRefreshHtml = (time, nexttime, type = 'meta') => {
         let divDom = document.createElement('div');
         divDom.title = `${chrome.i18n.getMessage("nextHappen")}:${nexttime}`;
         divDom.id = 'voltaIcon';
-        divDom.setAttribute('style', `position:fixed;
-        top:50%;
-        transform:translateY(-50%);
-        margin:auto;
-        right:20px;
-        width:32px;
-        height:32px;
-        background:url('${defaultImgUrl}');
-        background-size:cover;
-        background-repeat:np-repeat;
-        border-radius:50%;
-        z-index:999;
-        animation-name:vlotarefreshrotate;
-        animation-duration: 1s;
-        animation-iteration-count: infinite;
-        animation-timing-function:linear;
-        animation-fill-mode:forwards;
+        divDom.setAttribute('style', `
+                  position:fixed;
+                  top:50%;
+                  transform:translateY(-50%);
+                  margin:auto;
+                  right:20px;
+                  width:32px;
+                  height:32px;
+                  background:url('${defaultImgUrl}');
+                  background-size:cover;
+                  background-repeat:np-repeat;
+                  border-radius:50%;
+                  z-index:999;
+                  animation-name:vlotarefreshrotate;
+                  animation-duration: 1s;
+                  animation-iteration-count: infinite;
+                  animation-timing-function:linear;
+                  animation-fill-mode:forwards;
         `)
 
         document.body.appendChild(divDom);
         document.getElementById('voltaIcon').onclick = (e) => {
             let f = confirm(chrome.i18n.getMessage("contentConfirmText"));
             if (f) {
-                chrome.runtime.sendMessage(
-                    { from: 'content', type: 'stop' },
-                    (response) => {
-                        //stop的话 需要区分是那种方式的stop  取消 alarms的方式不一样的
-                        sessionStorage.removeItem(vloltaSessionInfoKey);
-                        location.reload();
-                    }
-                );
+                chrome.runtime.sendMessage({ from: 'content', type: 'stop' }).then((response) => {
+                    sessionStorage.removeItem(vloltaSessionInfoKey);
+                    location.reload();
+                })
             }
         }
         document.getElementById('voltaIcon').oncontextmenu = (e) => {
             e.preventDefault();
             e.target.style.display = "none";
-            // console.log('hello right')
         }
     }
 }
@@ -144,7 +140,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         } else if (request?.type === 'stop') {
             //停止
             sessionStorage.removeItem(vloltaSessionInfoKey);
-            sendResponse({ from:'content',message: "ok" });
+            sendResponse({ from: 'content', message: "ok" });
             location.reload();
         }
     } else {
@@ -160,9 +156,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-// chrome.runtime.sendMessage(
-//     { greeting: "hello，我是content-script，主动发消息给后台！" },
-//     function (response) {
-//       console.log("收到来自后台的回复：" + response);
-//     }
-//   );
