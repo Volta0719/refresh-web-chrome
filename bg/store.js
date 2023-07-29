@@ -7,6 +7,7 @@ const getTaskList = () => {
         })
     })
 }
+chrome.power.requestKeepAwake('system');
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     if (request?.from === 'content') {
         //保留  然后通过存到session

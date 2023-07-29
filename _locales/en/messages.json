@@ -46,5 +46,11 @@
    },
    "alarmsRefreshType": {
       "message": "Long-lasting Refresh"
+   },
+   "updateBtnTask": {
+      "message": "Update"
+   },
+   "updateBtnTitle": {
+      "message": "A refresh task already exists for the current page"
    }
 }
