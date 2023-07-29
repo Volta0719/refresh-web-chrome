@@ -5,7 +5,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const build = 'build'
+const buildDir = 'build'
 module.exports = {
     mode: 'production',
     entry: {
@@ -24,7 +24,7 @@ module.exports = {
     },
     output: {
         clean:true,
-        path: path.resolve(__dirname, `./${build}`)
+        path: path.resolve(__dirname, `./${buildDir}`)
     },
     plugins: [
         new HtmlWebpackPlugin({
