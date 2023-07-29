@@ -185,7 +185,7 @@ const addNewIcoDom = (icoData) => {
     title='${cur.title}'
     data-icon='${cur.icon}'
     data-url='${cur.url}' 
-    data-winid='${cur.winId}' 
+    data-winId='${cur.winId}' 
     data-count='${cur.count}' 
     data-time='${cur.time}' 
     data-nexttime='${cur.nexttime}'
@@ -266,7 +266,7 @@ icoBox.onclick = async (e) => {
     let taskList = await getTaskList();
     const taskInfoData = taskList[e.target.id];
     document.getElementById('iconVolta').src = taskInfoData?.icon || defaultImgUrl;
-    ['url', 'time', 'count', 'nexttime', 'title', 'tabId', 'refreshType'].forEach(f => {
+    ['url', 'time', 'count', 'nexttime', 'title', 'tabId', 'refreshType','winId'].forEach(f => {
         if (f === 'refreshType') {
             document.getElementById(`${f}Volta`).innerHTML = chrome.i18n.getMessage(`${taskInfoData[f]}${f}`)
         } else {
