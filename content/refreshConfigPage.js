@@ -6,7 +6,6 @@
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
  */
-console.log('chrome', chrome)
 // chrome.alarms.create({delayInMinutes: 3.0})
 const id = chrome?.runtime?.id || ''
 const vloltaSessionInfoKey = `voltaInfo_${id}`
