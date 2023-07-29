@@ -36,14 +36,13 @@ body {
     background: #1a92ee;
     text-transform: uppercase;
     color: white;
-    padding: 1px 20px;
     outline: none;
     overflow: hidden;
     position: relative;
     cursor: pointer;
     height: 30px;
     width: 80px;
-
+    text-align: center;
 }
 
 .add-btn:after {
@@ -172,6 +171,7 @@ body {
 
 .volta-refresh-box {
     margin: 10px 0;
+    justify-content: space-between;
 }
 
 #voltarefreshDesc {
@@ -185,6 +185,11 @@ body {
 
 }
 
+#voltarefreshTypeSelect {
+    height: 32px;
+    line-height: 32px;
+    font-weight: bold;
+}
 
 .radio-box:first-of-type {
     display: flex;
@@ -195,25 +200,24 @@ body {
 .radio-label {
     margin-right: 15px;
     line-height: 32px;
+    cursor: pointer;
 }
 
 .radio-item {
     appearance: none;
-
     border-radius: 50%;
     width: 16px;
     height: 16px;
-
     border: 2px solid #999;
     transition: 0.2s all linear;
     margin-right: 5px;
-
     position: relative;
     top: 4px;
+    cursor: pointer;
 }
 
 .radio-item:checked {
-    border: 6px solid black;
+    border: 6px solid #0b9aed;
 }
 
 

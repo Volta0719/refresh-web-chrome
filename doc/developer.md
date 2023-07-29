@@ -71,3 +71,11 @@ https://developer.chrome.com/extensions/i18n
 https://github.com/GoogleChrome/chrome-extensions-samples
 
 
+1.选择方式的hrml样式调整一下
+
+2.刷新方式的文案调整一下
+
+3，长久刷新的话 最小为1分钟 
+
+4，增加 windowid的显示
+
