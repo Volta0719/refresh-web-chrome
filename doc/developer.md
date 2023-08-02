@@ -81,3 +81,6 @@ https://github.com/GoogleChrome/chrome-extensions-samples
 
 5.不同刷新方式对应不同的刷新动画
 
+# Anti-996-License
+https://github.com/kattgu7/Anti-996-License
+
