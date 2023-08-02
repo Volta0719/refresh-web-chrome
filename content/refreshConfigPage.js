@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 13:57:47
- * @LastEditTime: 2023-07-29 20:50:35
+ * @LastEditTime: 2023-08-02 15:07:10
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\content\refreshConfigPage.js
  * @Description: 🎉🎉🎉
@@ -17,6 +17,7 @@ const createVoltaRefreshHtml = (time, nexttime, type = 'meta') => {
     if (!!document.getElementById('voltaIcon')) {
         document.getElementById('voltaIcon').title = `${chrome.i18n.getMessage("nextHappen")}:${nexttime}`;
         document.getElementById('voltaIcon').style.animationName = `vlota${type}refresh`;
+        document.getElementById('voltaIcon').style.display = "block";
     } else {
         const style = document.createElement('style')
         style.appendChild(document.createTextNode(`
@@ -36,6 +37,7 @@ const createVoltaRefreshHtml = (time, nexttime, type = 'meta') => {
         divDom.title = `${chrome.i18n.getMessage("nextHappen")}:${nexttime}`;
         divDom.id = 'voltaIcon';
         divDom.setAttribute('style', `
+                  display:block;
                   position:fixed;
                   top:50%;
                   transform:translateY(-50%);
