@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "24min",
-  "license": "ISC",
+  "license": "Anti-996",
   "devDependencies": {
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
