@@ -16,7 +16,7 @@
 |              | <img src="https://img1.imgtp.com/2023/08/04/dMvKxCQO.png" style="width:20px" /> Edge | <img src="https://img1.imgtp.com/2023/08/04/T7csyLE3.png" style="width:22px" /> Firefox | <img src="https://img1.imgtp.com/2023/08/04/21gqH24x.png" style="width:20px" /> Chrome |
 | :----------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |    源代码    | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) | [refresh-web-firefox](https://github.com/Volta0719/refresh-web-firefox#refresh-web-firefox) | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) |
-| 插件商店地址 |                        仍在上架审核中                        | [火狐插件商店](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) | 从源码安装使用|
+| 插件商店地址 | [微软插件商店](https://microsoftedge.microsoft.com/addons/detail/gjklkjghflejbeibdlefkbdljeoihkcp) | [火狐插件商店](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) |                        从源码安装使用                        |
 |   支持语言   |                          中、日、英                          |                          中、日、英                          |                          中、日、英                          |
 
 ![](https://img1.imgtp.com/2023/08/03/7hiRC5VM.png)

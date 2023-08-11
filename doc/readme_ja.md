@@ -16,7 +16,7 @@
 |                        | <img src="https://img1.imgtp.com/2023/08/04/dMvKxCQO.png" style="width:20px" /> Edge | <img src="https://img1.imgtp.com/2023/08/04/T7csyLE3.png" style="width:22px" /> Firefox | <img src="https://img1.imgtp.com/2023/08/04/21gqH24x.png" style="width:20px" /> Chrome |
 | :--------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ソースコードリポジトリ | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) | [refresh-web-firefox](https://github.com/Volta0719/refresh-web-firefox#refresh-web-firefox) | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) |
-|   プラグインアドレス   |                          まだ検討中                          | [ファイアーフォックスストア](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) | ソースからのインストールと使用 |
+|   プラグインアドレス   | [Edge アド オン](https://microsoftedge.microsoft.com/addons/detail/gjklkjghflejbeibdlefkbdljeoihkcp) | [ファイアーフォックスストア](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) |                ソースからのインストールと使用                |
 |        対応言語        |                    中国語、 英語、日本語                     |                    中国語、 英語、日本語                     |                    中国語、 英語、日本語                     |
 
 ![](https://img1.imgtp.com/2023/08/03/7hiRC5VM.png)
