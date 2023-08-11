@@ -12,7 +12,7 @@ This plugin supports the following browsers:
 |                     | <img src="https://img1.imgtp.com/2023/08/04/dMvKxCQO.png" style="width:20px" /> Edge | <img src="https://img1.imgtp.com/2023/08/04/T7csyLE3.png" style="width:22px" /> Firefox | <img src="https://img1.imgtp.com/2023/08/04/21gqH24x.png" style="width:20px" /> Chrome |
 | :-----------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |     Source Code     | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) | [refresh-web-firefox](https://github.com/Volta0719/refresh-web-firefox#refresh-web-firefox) | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) |
-|   Plugins address   |                      Still under review                      | [Firefox Browser ADD-ONS](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) | Use it from the source code |
+|   Plugins address   | [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/gjklkjghflejbeibdlefkbdljeoihkcp) | [Firefox Browser ADD-ONS](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) |                 Use it from the source code                  |
 | Supported languages |                  Chinese、English、Japanese                  |                  Chinese、English、Japanese                  |                  Chinese、English、Japanese                  |
 
 ![](https://img1.imgtp.com/2023/08/03/7hiRC5VM.png)
@@ -21,7 +21,7 @@ This plugin supports the following browsers:
 
 ## How To Use？
 
-1. **First you have to install**：You can install it from the store or [use the source code](https://github.com/Volta0719/refresh-web-firefox#3how-can-i-use-it-from-the-source-code).
+1. **First you have to install**：You can install it from the store or use the source code.
 2. **Add a refresh task :** Choose when and how you want to refresh. Different refresh methods correspond to different code implementations. So if you need to perform the refresh task all night and all night, choose *Long-lasting Refresh* type. If you add successfully, this icon  (<img src="https://img1.imgtp.com/2023/08/03/Zain7SkN.png" style="width:26px" />) will appear in the right-centered position on the target website. Different refresh methods correspond to different animation effects. Left-click can stop the task, right-click can hide the icon during this refresh cycle.
 3. **Grab a cup of coffee and wait for the refresh**: You can see the ICO icon at the bottom of the plugin's popup page, and You can get the details of this task after you click it (For example, the next refresh time and how many times it had already been refreshed).
 
