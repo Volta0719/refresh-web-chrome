@@ -52,5 +52,8 @@
    },
    "updateBtnTitle": {
       "message": "A refresh task already exists for the current page"
+   },
+   "anchorPageTitle":{
+      "message":"Click to navigate to this page"
    }
 }

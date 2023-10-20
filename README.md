@@ -1,4 +1,4 @@
-# <img src="https://img1.imgtp.com/2023/08/03/Zain7SkN.png" style="width:30px" /> Refresh Web Page Regularly
+# <img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/icons/icon.png" style="width:30px" /> Refresh Web Page Regularly
 
 English | [中文](https://github.com/Volta0719/refresh-web-chrome/blob/main/doc/readme_zh_CN.md) | [日本語](https://github.com/Volta0719/refresh-web-chrome/blob/main/doc/readme_ja.md)
 
@@ -9,20 +9,20 @@ English | [中文](https://github.com/Volta0719/refresh-web-chrome/blob/main/doc
 
 This plugin supports the following browsers:
 
-|                     | <img src="https://img1.imgtp.com/2023/08/04/dMvKxCQO.png" style="width:20px" /> Edge | <img src="https://img1.imgtp.com/2023/08/04/T7csyLE3.png" style="width:22px" /> Firefox | <img src="https://img1.imgtp.com/2023/08/04/21gqH24x.png" style="width:20px" /> Chrome |
+|                     | <img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/edge.png" style="width:20px" /> Edge | <img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/firefox.png" style="width:22px" /> Firefox | <img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/chrome.png" style="width:20px" /> Chrome |
 | :-----------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |     Source Code     | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) | [refresh-web-firefox](https://github.com/Volta0719/refresh-web-firefox#refresh-web-firefox) | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) |
 |   Plugins address   | [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/gjklkjghflejbeibdlefkbdljeoihkcp) | [Firefox Browser ADD-ONS](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) |                 Use it from the source code                  |
 | Supported languages |                  Chinese、English、Japanese                  |                  Chinese、English、Japanese                  |                  Chinese、English、Japanese                  |
 
-![](https://img1.imgtp.com/2023/08/03/7hiRC5VM.png)
+![](https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/home.png)
 
-![](https://img1.imgtp.com/2023/08/03/gzPiVWhw.png)
+![](https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/detail.png)
 
 ## How To Use？
 
 1. **First you have to install**：You can install it from the store or use the source code.
-2. **Add a refresh task :** Choose when and how you want to refresh. Different refresh methods correspond to different code implementations. So if you need to perform the refresh task all night and all night, choose *Long-lasting Refresh* type. If you add successfully, this icon  (<img src="https://img1.imgtp.com/2023/08/03/Zain7SkN.png" style="width:26px" />) will appear in the right-centered position on the target website. Different refresh methods correspond to different animation effects. Left-click can stop the task, right-click can hide the icon during this refresh cycle.
+2. **Add a refresh task :** Choose when and how you want to refresh. Different refresh methods correspond to different code implementations. So if you need to perform the refresh task all night and all night, choose *Long-lasting Refresh* type. If you add successfully, this icon  (<img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/icons/icon.png" style="width:26px" />) will appear in the right-centered position on the target website. Different refresh methods correspond to different animation effects. Left-click can stop the task, right-click can hide the icon during this refresh cycle.
 3. **Grab a cup of coffee and wait for the refresh**: You can see the ICO icon at the bottom of the plugin's popup page, and You can get the details of this task after you click it (For example, the next refresh time and how many times it had already been refreshed).
 
 ## Q&A
@@ -35,7 +35,7 @@ This plugin supports the following browsers:
 ###### 2. How can I stop the task?
 
 - **In the popup page**: Click the footer ico, In the upper right corner of the details page, there is a stop button to stop the task that is automatically refreshed.
-- **In the target website**: In the right-centered position on the target website will appear this icon  (<img src="https://img1.imgtp.com/2023/08/03/Zain7SkN.png" style="width:26px" />),click it will stop the task.
+- **In the target website**: In the right-centered position on the target website will appear this icon  (<img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/icons/icon.png" style="width:26px" />),click it will stop the task.
 
 ###### 3. How can i use it from the source code?
 

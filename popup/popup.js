@@ -1,7 +1,7 @@
 /*
  * @Author: fanjf
  * @Date: 2023-07-20 14:20:05
- * @LastEditTime: 2023-07-28 16:55:36
+ * @LastEditTime: 2023-10-20 11:25:36
  * @LastEditors: fanjf
  * @FilePath: \refresh-web\popup\popup.js
  * @Description: 🎉🎉🎉 
@@ -65,6 +65,10 @@ const htmli18nList = {
     refreshType: [{
         props: 'innerText',
         value: 'refreshTypeTitle'
+    }],
+    anchorPage: [{
+        props: 'title',
+        value: 'anchorPageTitle'
     }]
 
 }
@@ -76,7 +80,6 @@ const choosedTimeList = ['30', '60', '300', '600', '900', '1200', '1800', '3600'
 const defaultImgUrl = chrome.runtime.getURL("icons/icon.png")
 let tabs;
 let currentTime;//刷新的时间间隔
-
 const getTaskList = () => {
     return new Promise((resolve, reject) => {
         chrome.storage.session.get('vlotaTaskList', (result) => {
@@ -280,6 +283,13 @@ icoBox.onclick = async (e) => {
     document.getElementById('voltastopTask').setAttribute('data-id', e.target.id)
     voltaMaskBox.classList.remove('mask-box-out');
     voltaMaskBox.classList.add('mask-box-in');
+}
+
+document.getElementById('iconVolta').onclick = () => {
+    const tabId = document.getElementById('tabIdVolta').innerText;
+    const winId = document.getElementById('winIdVolta').innerText;
+    chrome.windows.update(+winId, { focused: true });
+    chrome.tabs.update(+tabId, { active: true });
 }
 // close detail
 document.getElementById('voltacloseTaskDetail').onclick = (e) => {
