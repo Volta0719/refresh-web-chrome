@@ -53,5 +53,17 @@ This plugin supports the following browsers:
 
 - You can use it now!
 
+###### 4.In [Firefox Browser ADD-ONS](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) Installation interface,What this warning means?
+
+> ⚠️ This add-on is not actively monitored for security by Mozilla. Make sure you trust it before installing.
+
+   Nothing to be done , all extensions have that warning !
+
+   Well, not all, only 99.65% of them 
+
+   In any case, if you could get rid of the “Access your data for all  websites” permission, it could attract more people. You should be able  to do a lot with `activeTab` permission, or maybe just the `tabs` permission. Or make the host permissions optional (although that’s a lot of work).
+
+  So you can ignore this warning! For details, you can check out [this post](https://discourse.mozilla.org/t/this-add-on-is-not-actively-monitored-for-security-by-mozilla-make-sure-you-trust-it-before-installing/121823).
+
 
 

@@ -16,7 +16,7 @@
 |                        | <img src="https://img1.imgtp.com/2023/08/04/dMvKxCQO.png" style="width:20px" /> Edge | <img src="https://img1.imgtp.com/2023/08/04/T7csyLE3.png" style="width:22px" /> Firefox | <img src="https://img1.imgtp.com/2023/08/04/21gqH24x.png" style="width:20px" /> Chrome |
 | :--------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ソースコードリポジトリ | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) | [refresh-web-firefox](https://github.com/Volta0719/refresh-web-firefox#refresh-web-firefox) | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) |
-|   プラグインアドレス   | [Edge アド オン](https://microsoftedge.microsoft.com/addons/detail/gjklkjghflejbeibdlefkbdljeoihkcp) | [ファイアーフォックスストア](https://addons.mozilla.org/en-US/firefox/addon/refresh-web-page-regularly/) |                ソースからのインストールと使用                |
+|   プラグインアドレス   | [Edge アド オン](https://microsoftedge.microsoft.com/addons/detail/gjklkjghflejbeibdlefkbdljeoihkcp) | [ファイアーフォックスストア](https://addons.mozilla.org/ja/firefox/addon/refresh-web-page-regularly/) |                ソースからのインストールと使用                |
 |        対応言語        |                    中国語、 英語、日本語                     |                    中国語、 英語、日本語                     |                    中国語、 英語、日本語                     |
 
 ![](https://img1.imgtp.com/2023/08/03/7hiRC5VM.png)
@@ -56,6 +56,18 @@
 - [プラグイン管理] ページで、開発者モードをオンにし、[ファイルからプラグインを読み込む] を選択します (前の手順のパッケージ製品)
 
 - あなたは今それを使うことができます!
+
+###### 4.プラグインのインストール画面でこの警告はどういう意味ですか?
+
+> ⚠️ このアドオンは、Mozilla によるセキュリティの監視がアクティブに行われていません。インストールする前に、信頼できるアドオンか自分で確かめてください
+
+何もする必要はありません、すべての拡張機能にはその警告があります!
+
+まあ、すべてではなく、それらの99.65%だけです
+
+いずれにせよ、「すべてのWebサイトのデータにアクセスする」権限を取り除くことができれば、より多くの人々を引き付けることができます。あなたは 'activeTab'権限、あるいは単に 'tabs'権限で多くのことができるはずです。または、ホストのアクセス許可をオプションにします(ただし、これは多くの作業です)。
+
+したがって、この警告は無視してかまいません。詳細については、[この投稿](https://discourse.mozilla.org/t/this-add-on-not-active-monitored-for-security-by-mozilla-make-sure-you-trust-before-install/121823)をご覧ください。
 
 
 
