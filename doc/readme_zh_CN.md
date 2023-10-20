@@ -1,12 +1,6 @@
-<!--
- * @Author: fanjf
- * @Date: 2023-08-04 17:31:58
- * @LastEditTime: 2023-10-20 10:21:32
- * @LastEditors: fanjf
- * @FilePath: \refresh-web\doc\readme_zh_CN.md
- * @Description: 🎉🎉🎉
--->
-# <img src="https://img1.imgtp.com/2023/08/03/Zain7SkN.png" style="width:30px" /> 定时刷新页面
+
+
+# <img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/icons/icon.png" style="width:30px" /> 定时刷新页面
 
 [English](https://github.com/Volta0719/refresh-web-chrome/blob/main/README.md) | 中文 | [日本語](https://github.com/Volta0719/refresh-web-chrome/blob/main/doc/readme_ja.md)
 
@@ -21,20 +15,20 @@
 
 支持在以下浏览器中使用：
 
-|              | <img src="https://img1.imgtp.com/2023/08/04/dMvKxCQO.png" style="width:20px" /> Edge | <img src="https://img1.imgtp.com/2023/08/04/T7csyLE3.png" style="width:22px" /> Firefox | <img src="https://img1.imgtp.com/2023/08/04/21gqH24x.png" style="width:20px" /> Chrome |
+|              | <img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/edge.png" style="width:20px" /> Edge | <img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/firefox.png" style="width:22px" /> Firefox | <img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/chrome.png" style="width:20px" /> Chrome |
 | :----------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |    源代码    | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) | [refresh-web-firefox](https://github.com/Volta0719/refresh-web-firefox#refresh-web-firefox) | [refresh-web-chrome](https://github.com/Volta0719/refresh-web-chrome) |
 | 插件商店地址 | [微软插件商店](https://microsoftedge.microsoft.com/addons/detail/gjklkjghflejbeibdlefkbdljeoihkcp) | [火狐插件商店](https://addons.mozilla.org/zh-CN/firefox/addon/refresh-web-page-regularly/) |                        从源码安装使用                        |
 |   支持语言   |                          中、日、英                          |                          中、日、英                          |                          中、日、英                          |
 
-![](https://img1.imgtp.com/2023/08/03/7hiRC5VM.png)
+![](https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/home.png)
 
-![](https://img1.imgtp.com/2023/08/03/gzPiVWhw.png)
+![](https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/image/detail.png)
 
 ## 如何使用？
 
 1. **首先你得安装**：你可以从插件商店获取或者从源码安装。
-2. **添加一个刷新任务**： 在插件弹出的首页，选择刷新间隔以及刷新方式。不同的刷新方式对应着不同的代码实现。所以加入你需要一整晚一整晚的刷新，请选择*长久刷新*的模式。如果刷新任务添加成功了， 那么这个图标 (<img src="https://img1.imgtp.com/2023/08/03/Zain7SkN.png" style="width:30px" />)将会出现在目标网站靠右居中的位置。 不同的刷新模式将会有不同的动画效果。在目标网站上左键点击可以停止这个刷新任务，右键点击将会在本次刷新周期内暂时隐藏此图标。 
+2. **添加一个刷新任务**： 在插件弹出的首页，选择刷新间隔以及刷新方式。不同的刷新方式对应着不同的代码实现。所以加入你需要一整晚一整晚的刷新，请选择*长久刷新*的模式。如果刷新任务添加成功了， 那么这个图标 (<img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/icons/icon.png" style="width:30px" />)将会出现在目标网站靠右居中的位置。 不同的刷新模式将会有不同的动画效果。在目标网站上左键点击可以停止这个刷新任务，右键点击将会在本次刷新周期内暂时隐藏此图标。 
 3. **泡杯茶等待刷新**: 在插件弹出页面的底部我们可以看到网站的ICO图标，点击其中的某个图标，我们可以看到关于这个刷新任务的详细情况，包括下次刷新时间以及已经刷新了多少次。
 
 ## Q&A
@@ -47,7 +41,7 @@
 ###### 2. 怎么样停止任务?
 
 - **插件弹出界面**: 点击底部的ICO图标，在详情页面的右上角有停止按钮。
-- **在目标网站上**: 在网站的靠右中间会有这个图标  (<img src="https://img1.imgtp.com/2023/08/03/Zain7SkN.png" style="width:30px" />)，单击这个图标也可以停止。
+- **在目标网站上**: 在网站的靠右中间会有这个图标  (<img src="https://raw.githubusercontent.com/Volta0719/refresh-web-firefox/main/icons/icon.png" style="width:30px" />)，单击这个图标也可以停止。
 
 ###### 3. 从源码怎么安装使用?
 
