@@ -114,6 +114,10 @@ body {
     cursor: pointer;
 }
 
+#iconVolta {
+    cursor: pointer;
+}
+
 .ico-item:hover,
 #iconVolta:hover {
     transform: rotate(666turn);

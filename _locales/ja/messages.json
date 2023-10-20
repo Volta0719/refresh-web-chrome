@@ -52,5 +52,8 @@
    },
    "updateBtnTitle": {
       "message": "現在のページの更新タスクが既に存在します"
+   },
+   "anchorPageTitle":{
+      "message":"クリックしてこのページに移動します"
    }
 }

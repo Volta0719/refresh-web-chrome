@@ -52,5 +52,8 @@
    },
    "updateBtnTitle": {
       "message": "当前页面已经存在刷新任务"
+   },
+   "anchorPageTitle":{
+      "message":"点击定位到此页面"
    }
 }
